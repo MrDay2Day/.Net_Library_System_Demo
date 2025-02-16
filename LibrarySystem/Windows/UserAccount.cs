@@ -17,6 +17,8 @@ namespace LibrarySystem.Windows
         {
             InitializeComponent();
             this.systemUser = user;
+
+            this.Text = $"{systemUser.First_name}'s Account Information";
         }
     }
 }

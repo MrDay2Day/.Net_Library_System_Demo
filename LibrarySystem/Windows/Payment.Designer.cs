@@ -45,7 +45,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.btn_save_new = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lb_total = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -203,15 +203,15 @@
             this.btn_save_new.Text = "Save";
             this.btn_save_new.UseVisualStyleBackColor = false;
             // 
-            // label9
+            // lb_total
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(57, 83);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 20);
-            this.label9.TabIndex = 36;
-            this.label9.Text = "$ 3000.00";
+            this.lb_total.AutoSize = true;
+            this.lb_total.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_total.Location = new System.Drawing.Point(57, 83);
+            this.lb_total.Name = "lb_total";
+            this.lb_total.Size = new System.Drawing.Size(89, 20);
+            this.lb_total.TabIndex = 36;
+            this.lb_total.Text = "$ 3000.00";
             // 
             // label10
             // 
@@ -228,7 +228,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(314, 451);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lb_total);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_save_new);
@@ -280,7 +280,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btn_save_new;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lb_total;
         private System.Windows.Forms.Label label10;
     }
 }

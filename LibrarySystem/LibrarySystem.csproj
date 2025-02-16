@@ -190,6 +190,9 @@
     <EmbeddedResource Include="Windows\Payment.resx">
       <DependentUpon>Payment.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\UserAccount.resx">
+      <DependentUpon>UserAccount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ViewAll.resx">
       <DependentUpon>ViewAll.cs</DependentUpon>
     </EmbeddedResource>

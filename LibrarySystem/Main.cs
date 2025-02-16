@@ -123,8 +123,9 @@ namespace LibrarySystem
 
         private void mbtb_user_account_Click(object sender, EventArgs e)
         {
-            UtilityFunctions.CloseAll(this);
-            UtilityFunctions.ShowMdiChild<UserAccount>(this, systemUser);
+            using (UserAccount userAccount = (new UserAccount(systemUser))) { 
+                userAccount.ShowDialog();
+            }
         }
 
         private void myRentalsToolStripMenuItem_Click(object sender, EventArgs e)

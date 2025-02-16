@@ -12,11 +12,12 @@ namespace LibrarySystem.Windows
 {
     public partial class Payment : Form
     {
-        double amount;
+        double amount_due;
         public Payment(double _amount)
         {
             InitializeComponent();
-            this.amount = _amount;
+            this.amount_due = _amount;
+            lb_total.Text = $"${this.amount_due.ToString()}";
         }
     }
 }
