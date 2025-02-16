@@ -22,7 +22,7 @@ CREATE TABLE Users (
     updated_at DATETIME2 DEFAULT GETDATE() NOT NULL
 );
 INSERT INTO Users(First_name, Last_name, email, password)
-VALUES('Administrator', '', 'admin@email.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+VALUES('Administrator', 'Admin', 'admin@email.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
 GO
 
 CREATE TABLE Books (
@@ -236,6 +236,249 @@ END;
 --EXEC sp_FetchBooks @page_number = 1, @is_available = 1, @search_text = NULL
 --GO
 GO
+
+CREATE PROCEDURE sp_FetchBooks_Simple
+    @is_available INT = 1, -- 1: All, 2: Available Only, 3: Not Available
+    @search_text NVARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Validate parameters
+    IF @is_available NOT IN (1, 2, 3) SET @is_available = 1
+    
+    
+    -- Prepare search text for LIKE query
+    DECLARE @search_pattern NVARCHAR(258)
+    IF @search_text IS NOT NULL
+        SET @search_pattern = '%' + @search_text + '%'
+    
+    -- Main query with CTE to handle ranking of search results
+    ;WITH RankedBooks AS (
+        SELECT 
+            b.Book_id,
+            b.Title,
+            b.Description,
+            b.Author,
+            b.PublishedYear,
+            b.Available,
+            br.Borrow_id,
+            br.Borrow_date,
+            br.Schedule_return_date,
+            u.First_name + ' ' + u.Last_name AS Borrower_Name,
+            -- Calculate search rank based on where the match is found
+            CASE 
+                WHEN @search_text IS NULL THEN 1
+                ELSE (
+                    CASE WHEN b.Title LIKE @search_pattern THEN 3 ELSE 0 END +
+                    CASE WHEN b.Author LIKE @search_pattern THEN 2 ELSE 0 END +
+                    CASE WHEN b.Description LIKE @search_pattern THEN 1 ELSE 0 END
+                )
+            END AS SearchRank
+        FROM 
+            Books b
+            LEFT JOIN Borrows br ON b.Book_id = br.Book_id 
+                AND br.Actual_return_date IS NULL -- Only get current borrow if exists
+            LEFT JOIN Users u ON br.User_id = u.User_id
+        WHERE 
+            (@search_text IS NULL OR 
+             b.Title LIKE @search_pattern OR 
+             b.Author LIKE @search_pattern OR 
+             b.Description LIKE @search_pattern)
+            AND
+            (@is_available = 1 OR 
+             (@is_available = 2 AND b.Available = 1) OR 
+             (@is_available = 3 AND b.Available = 0))
+    )
+    
+    -- Final select with pagination
+    SELECT 
+        Book_id,
+        Title,
+        Description,
+        Author,
+        PublishedYear,
+        Available,
+        Borrow_id,
+        Borrow_date,
+        Schedule_return_date,
+        Borrower_Name,
+        -- Get total count for pagination
+        COUNT(*) OVER() AS TotalCount
+    FROM 
+        RankedBooks
+    ORDER BY 
+        SearchRank DESC, -- Higher ranked matches appear first
+        Title ASC; -- Then alphabetically by title
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_FetchBooks_Search_Only
+    @page_number INT = 1,
+    @is_available INT = 1, -- 1: All, 2: Available Only, 3: Not Available
+	@page_size INT = 20,
+    @search_text NVARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Validate parameters
+    IF @page_number < 1 SET @page_number = 1
+    IF @is_available NOT IN (1, 2, 3) SET @is_available = 1
+    
+    -- Define page size
+    DECLARE @offset INT = (@page_number - 1) * @page_size
+    
+    -- Prepare search text for LIKE query
+    DECLARE @search_pattern NVARCHAR(258)
+    IF @search_text IS NOT NULL
+        SET @search_pattern = '%' + @search_text + '%'
+    
+    -- Main query with CTE to handle ranking of search results
+    ;WITH RankedBooks AS (
+        SELECT 
+            b.Book_id,
+            b.Title,
+            b.Description,
+            b.Author,
+            b.PublishedYear,
+            b.Available,
+            br.Borrow_id,
+            br.Borrow_date,
+            br.Schedule_return_date,
+            u.First_name + ' ' + u.Last_name AS Borrower_Name,
+            -- Calculate search rank based on where the match is found
+            CASE 
+                WHEN @search_text IS NULL THEN 1
+                ELSE (
+                    CASE WHEN b.Title LIKE @search_pattern THEN 3 ELSE 0 END +
+                    CASE WHEN b.Author LIKE @search_pattern THEN 2 ELSE 0 END +
+                    CASE WHEN b.Description LIKE @search_pattern THEN 1 ELSE 0 END
+                )
+            END AS SearchRank
+        FROM 
+            Books b
+            LEFT JOIN Borrows br ON b.Book_id = br.Book_id 
+                AND br.Actual_return_date IS NULL -- Only get current borrow if exists
+            LEFT JOIN Users u ON br.User_id = u.User_id
+        WHERE 
+            (@search_text IS NULL OR 
+             b.Title LIKE @search_pattern OR 
+             b.Author LIKE @search_pattern OR 
+             b.Description LIKE @search_pattern)
+            AND
+            (@is_available = 1 OR 
+             (@is_available = 2 AND b.Available = 1) OR 
+             (@is_available = 3 AND b.Available = 0))
+    )
+    
+    -- Final select with pagination
+    SELECT 
+        Book_id,
+        Title,
+        Description,
+        Author,
+        PublishedYear,
+        Available,
+        Borrow_id,
+        Borrow_date,
+        Schedule_return_date,
+        Borrower_Name,
+        -- Get total count for pagination
+        COUNT(*) OVER() AS TotalCount
+    FROM 
+        RankedBooks
+    ORDER BY 
+        SearchRank DESC, -- Higher ranked matches appear first
+        Title ASC -- Then alphabetically by title
+    OFFSET @offset ROWS
+    FETCH NEXT @page_size ROWS ONLY;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_FetchBooks_Count_Only
+    @is_available INT = 1, -- 1: All, 2: Available Only, 3: Not Available
+    @search_text NVARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    -- Validate parameters
+    IF @is_available NOT IN (1, 2, 3) SET @is_available = 1
+    
+    
+    -- Prepare search text for LIKE query
+    DECLARE @search_pattern NVARCHAR(258)
+    IF @search_text IS NOT NULL
+        SET @search_pattern = '%' + @search_text + '%'
+    
+    -- Create temp table to store filtered results
+    CREATE TABLE #FilteredBooks (
+        Book_id INT,
+        Title NVARCHAR(255),
+        Description NVARCHAR(500),
+        Author NVARCHAR(255),
+        PublishedYear INT,
+        Available BIT,
+        Borrow_id INT,
+        Borrow_date DATETIME2,
+        Schedule_return_date DATETIME2,
+        Borrower_Name NVARCHAR(501),
+        SearchRank INT
+    )
+
+    -- Insert filtered results into temp table
+    INSERT INTO #FilteredBooks
+    SELECT 
+        b.Book_id,
+        b.Title,
+        b.Description,
+        b.Author,
+        b.PublishedYear,
+        b.Available,
+        br.Borrow_id,
+        br.Borrow_date,
+        br.Schedule_return_date,
+        u.First_name + ' ' + u.Last_name AS Borrower_Name,
+        -- Calculate search rank based on where the match is found
+        CASE 
+            WHEN @search_text IS NULL THEN 1
+            ELSE (
+                CASE WHEN b.Title LIKE @search_pattern THEN 3 ELSE 0 END +
+                CASE WHEN b.Author LIKE @search_pattern THEN 2 ELSE 0 END +
+                CASE WHEN b.Description LIKE @search_pattern THEN 1 ELSE 0 END
+            )
+        END AS SearchRank
+    FROM 
+        Books b
+        LEFT JOIN Borrows br ON b.Book_id = br.Book_id 
+            AND br.Actual_return_date IS NULL -- Only get current borrow if exists
+        LEFT JOIN Users u ON br.User_id = u.User_id
+    WHERE 
+        (@search_text IS NULL OR 
+         b.Title LIKE @search_pattern OR 
+         b.Author LIKE @search_pattern OR 
+         b.Description LIKE @search_pattern)
+        AND
+        (@is_available = 1 OR 
+         (@is_available = 2 AND b.Available = 1) OR 
+         (@is_available = 3 AND b.Available = 0))
+
+    -- Get counts for different categories
+    SELECT
+        (SELECT COUNT(*) FROM #FilteredBooks) AS TotalFilteredCount,
+        (SELECT COUNT(*) FROM Books) AS TotalBooksCount,
+        (SELECT COUNT(*) FROM Books WHERE Available = 1) AS AvailableBooksCount,
+        (SELECT COUNT(*) FROM Books WHERE Available = 0) AS BorrowedBooksCount
+
+
+    -- Clean up
+    DROP TABLE #FilteredBooks
+END;
+--EXEC sp_FetchBooks @page_number = 1, @is_available = 1, @search_text = NULL
+--GO
+GO
+
 
 -- Borrow Book
 CREATE OR ALTER PROCEDURE sp_BorrowBook

@@ -1,45 +1,155 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarRental.Utils;
 using LibrarySystem.Windows;
 
 namespace LibrarySystem
 {
     public partial class Main : Form
     {
+        private Library_SystemEntities db;
 
-        private ViewAll viewAllBooks;
+        User systemUser;
         public Main()
         {
             InitializeComponent();
+            InitialDB();
 
             main_menu.Visible = false;
 
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void InitialDB()
         {
-
+            try
+            {
+                db = new Library_SystemEntities();
+            }
+            catch (Exception)
+            {
+                WarningPopUp popup = new WarningPopUp("Server Error", "Server Connection Error", "There seems to be an issue connecting to the database. Please contact support.");
+                popup.ShowDialog();
+            }
         }
+
+        private void Login()
+        {
+            try
+            {
+                var email = tb_email.Text.Trim();
+                var password = tb_password.Text;
+
+                SHA256 sha = new SHA256Managed();
+                byte[] data = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+                StringBuilder sBuilder = new StringBuilder();
+                foreach (var b in data)
+                {
+                    sBuilder.Append(b.ToString("x2"));
+                }
+                string hash_password = sBuilder.ToString();
+
+
+                systemUser = db.Users.FirstOrDefault(u => u.Email == email && u.Password == hash_password);
+                if (systemUser == null)
+                {
+                    MessageBox.Show("Invalid credentials", "Login Error");
+                    return;
+
+                }
+                login_panel.Visible = false;
+                main_menu.Visible = true;
+                mbtn_user_name.Text = $"{systemUser.First_name} {systemUser.Last_name[0]}.";
+
+                switch (systemUser.Type)
+                {
+                    case "ADMIN":
+                        mbtn_user_manage.Visible = true;
+                        mbtn_add_book.Visible = true;
+                        mbtn_overdue.Visible = true;
+                        break;
+                    case "STAFF":
+                        mbtn_add_book.Visible = true;
+                        mbtn_overdue.Visible = true;
+                        break;
+                    default:
+                        break;
+                }
+
+                return;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Something went wrong", "Login Error");
+            }
+            finally
+            {
+                tb_email.Text = "";
+                tb_password.Text = "";
+            }
+        }
+
 
         private void mbtn_view_all_books_Click(object sender, EventArgs e)
         {
-
-            viewAllBooks = new ViewAll();
-            viewAllBooks.MdiParent = this;
-            viewAllBooks.Show();            
+            UtilityFunctions.CloseAll(this);
+            UtilityFunctions.ShowMdiChild<ViewAll>(this, systemUser);
         }
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            login_panel.Visible = false;
-            main_menu.Visible = true;
+            Login();
+        }
+
+        private void mbtn_logout_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.CloseAll(this);
+            login_panel.Visible = true;
+            main_menu.Visible = false;
+            systemUser = null;
+            mbtn_user_name.Text = "-";
+            mbtn_user_manage.Visible = false;
+            mbtn_add_book.Visible = false;
+            mbtn_overdue.Visible = false;
+
+        }
+
+        private void mbtn_add_book_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.OpenAsDialog<AddBook>();
+        }
+
+        private void mbtb_user_account_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.CloseAll(this);
+            UtilityFunctions.ShowMdiChild<UserAccount>(this, systemUser);
+        }
+
+        private void myRentalsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.CloseAll(this);
+            UtilityFunctions.ShowMdiChild<MyRentals>(this, systemUser);
+
+        }
+
+        private void mbtn_add_user_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.OpenAsDialog<CreateUser>();
+        }
+
+        private void mbtn_view_all_users_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.CloseAll(this);
+            UtilityFunctions.ShowMdiChild<ViewAllUsers>(this, systemUser);
+
+        }
+
+        private void mbtn_overdue_Click(object sender, EventArgs e)
+        {
+            UtilityFunctions.CloseAll(this);
+            UtilityFunctions.ShowMdiChild<Overdue>(this, systemUser);
         }
     }
 }

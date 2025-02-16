@@ -2,6 +2,8 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
+using LibrarySystem;
+using LibrarySystem.Windows;
 
 namespace CarRental.Utils
 {
@@ -26,6 +28,46 @@ namespace CarRental.Utils
                 childForm.MdiParent = parent;
             };
             childForm.Show();
+            childForm.WindowState = FormWindowState.Maximized;
+        }
+
+        public static void ShowMdiChild<T>(Form parent = null, User user = null) where T : Form
+        {
+            // Check if the form is already open
+            foreach (Form form in parent.MdiChildren)
+            {
+                if (form is T)
+                {
+                    form.Activate(); // Bring the existing form to the front
+                    return; // Exit to prevent multiple instances
+                }
+            }
+
+            // Create and show the form if not already open
+            T childForm;
+            if (user != null)
+            {
+                var constructor = typeof(T).GetConstructor(new[] { typeof(User) });
+                if (constructor != null)
+                {
+                    childForm = (T)constructor.Invoke(new object[] { user });
+                }
+                else
+                {
+                    throw new ArgumentException($"No constructor found in {typeof(T).Name} that accepts {typeof(User).Name}.");
+                }
+            }
+            else
+            {
+                childForm = (T)Activator.CreateInstance(typeof(T));
+            }
+
+            if (parent != null)
+            {
+                childForm.MdiParent = parent;
+            }
+            childForm.Show();
+            childForm.WindowState = FormWindowState.Maximized;
         }
 
         public static void ShowMdiChild<T, U>(U passObject = default, Form parent = null) where T : Form
@@ -70,6 +112,44 @@ namespace CarRental.Utils
             }
 
             childForm.Show();
+            childForm.WindowState = FormWindowState.Maximized;
+        }
+
+
+
+
+        public static void CloseAll(Form parent = null)
+        {
+            foreach (Form form in parent.MdiChildren)
+            {
+                form.Close();
+            }
+        }
+
+
+        public static bool OpenAsDialog<F>() where F : Form, new()
+        {
+            try
+            {
+               using(F element = (new F()))
+                {
+                    if (element.ShowDialog() == DialogResult.OK)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                WarningPopUp popup = new WarningPopUp("Systen Error", "System Error", "That seems to be a critical error with the system, Please contact support.");
+                return false;
+            }
         }
 
         public static string EncryptPassword(string password)

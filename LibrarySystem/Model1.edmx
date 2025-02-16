@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Library_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Library_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Books">
           <Key>
             <PropertyRef Name="Book_id" />
@@ -103,6 +103,20 @@
           <Parameter Name="is_available" Type="int" Mode="In" />
           <Parameter Name="search_text" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_FetchBooks_Count_Only" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="is_available" Type="int" Mode="In" />
+          <Parameter Name="search_text" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchBooks_Search_Only" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="page_number" Type="int" Mode="In" />
+          <Parameter Name="is_available" Type="int" Mode="In" />
+          <Parameter Name="page_size" Type="int" Mode="In" />
+          <Parameter Name="search_text" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchBooks_Simple" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="is_available" Type="int" Mode="In" />
+          <Parameter Name="search_text" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_ReturnBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="borrow_id" Type="int" Mode="In" />
           <Parameter Name="daily_late_fee" Type="decimal" Mode="In" />
@@ -125,8 +139,7 @@
             <End Role="LateFeePayments" EntitySet="LateFeePayments" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Library_SystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -255,6 +268,20 @@
             <Parameter Name="borrow_id" Mode="In" Type="Int32" />
             <Parameter Name="daily_late_fee" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="sp_FetchBooks_Simple" ReturnType="Collection(Library_SystemModel.sp_FetchBooks_Simple_Result)">
+            <Parameter Name="is_available" Mode="In" Type="Int32" />
+            <Parameter Name="search_text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchBooks_Count_Only">
+            <Parameter Name="is_available" Mode="In" Type="Int32" />
+            <Parameter Name="search_text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchBooks_Search_Only" ReturnType="Collection(Library_SystemModel.sp_FetchBooks_Search_Only_Result)">
+            <Parameter Name="page_number" Mode="In" Type="Int32" />
+            <Parameter Name="is_available" Mode="In" Type="Int32" />
+            <Parameter Name="page_size" Mode="In" Type="Int32" />
+            <Parameter Name="search_text" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_BorrowBook_Result">
           <Property Type="Int32" Name="Borrow_id" Nullable="false" />
@@ -274,6 +301,32 @@
           <Property Type="DateTime" Name="Actual_return_date" Nullable="true" />
           <Property Type="Int32" Name="Days_Late" Nullable="true" />
           <Property Type="Decimal" Name="Late_Fee_Amount" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchBooks_Simple_Result">
+          <Property Type="Int32" Name="Book_id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Author" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="PublishedYear" Nullable="true" />
+          <Property Type="Boolean" Name="Available" Nullable="false" />
+          <Property Type="Int32" Name="Borrow_id" Nullable="true" />
+          <Property Type="DateTime" Name="Borrow_date" Nullable="true" />
+          <Property Type="DateTime" Name="Schedule_return_date" Nullable="true" />
+          <Property Type="String" Name="Borrower_Name" Nullable="true" MaxLength="501" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchBooks_Search_Only_Result">
+          <Property Type="Int32" Name="Book_id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Author" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="PublishedYear" Nullable="true" />
+          <Property Type="Boolean" Name="Available" Nullable="false" />
+          <Property Type="Int32" Name="Borrow_id" Nullable="true" />
+          <Property Type="DateTime" Name="Borrow_date" Nullable="true" />
+          <Property Type="DateTime" Name="Schedule_return_date" Nullable="true" />
+          <Property Type="String" Name="Borrower_Name" Nullable="true" MaxLength="501" />
+          <Property Type="Int32" Name="TotalCount" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -362,6 +415,41 @@
                 <ScalarProperty Name="Actual_return_date" ColumnName="Actual_return_date" />
                 <ScalarProperty Name="Days_Late" ColumnName="Days_Late" />
                 <ScalarProperty Name="Late_Fee_Amount" ColumnName="Late_Fee_Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchBooks_Simple" FunctionName="Library_SystemModel.Store.sp_FetchBooks_Simple">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Library_SystemModel.sp_FetchBooks_Simple_Result">
+                <ScalarProperty Name="Book_id" ColumnName="Book_id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="PublishedYear" ColumnName="PublishedYear" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Borrow_id" ColumnName="Borrow_id" />
+                <ScalarProperty Name="Borrow_date" ColumnName="Borrow_date" />
+                <ScalarProperty Name="Schedule_return_date" ColumnName="Schedule_return_date" />
+                <ScalarProperty Name="Borrower_Name" ColumnName="Borrower_Name" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchBooks_Count_Only" FunctionName="Library_SystemModel.Store.sp_FetchBooks_Count_Only" />
+          <FunctionImportMapping FunctionImportName="sp_FetchBooks_Search_Only" FunctionName="Library_SystemModel.Store.sp_FetchBooks_Search_Only">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Library_SystemModel.sp_FetchBooks_Search_Only_Result">
+                <ScalarProperty Name="Book_id" ColumnName="Book_id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="PublishedYear" ColumnName="PublishedYear" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Borrow_id" ColumnName="Borrow_id" />
+                <ScalarProperty Name="Borrow_date" ColumnName="Borrow_date" />
+                <ScalarProperty Name="Schedule_return_date" ColumnName="Schedule_return_date" />
+                <ScalarProperty Name="Borrower_Name" ColumnName="Borrower_Name" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace LibrarySystem.Windows
 {
-    public partial class AddBook : Form
+    public partial class UserAccount : Form
     {
-
-        public AddBook()
+        private User systemUser;
+        public UserAccount(User user)
         {
             InitializeComponent();
+            this.systemUser = user;
         }
     }
 }

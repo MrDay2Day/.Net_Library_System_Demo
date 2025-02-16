@@ -78,5 +78,52 @@ namespace LibrarySystem
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ReturnBook_Result>("sp_ReturnBook", borrow_idParameter, daily_late_feeParameter);
         }
+    
+        public virtual ObjectResult<sp_FetchBooks_Simple_Result> sp_FetchBooks_Simple(Nullable<int> is_available, string search_text)
+        {
+            var is_availableParameter = is_available.HasValue ?
+                new ObjectParameter("is_available", is_available) :
+                new ObjectParameter("is_available", typeof(int));
+    
+            var search_textParameter = search_text != null ?
+                new ObjectParameter("search_text", search_text) :
+                new ObjectParameter("search_text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FetchBooks_Simple_Result>("sp_FetchBooks_Simple", is_availableParameter, search_textParameter);
+        }
+    
+        public virtual int sp_FetchBooks_Count_Only(Nullable<int> is_available, string search_text)
+        {
+            var is_availableParameter = is_available.HasValue ?
+                new ObjectParameter("is_available", is_available) :
+                new ObjectParameter("is_available", typeof(int));
+    
+            var search_textParameter = search_text != null ?
+                new ObjectParameter("search_text", search_text) :
+                new ObjectParameter("search_text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_FetchBooks_Count_Only", is_availableParameter, search_textParameter);
+        }
+    
+        public virtual ObjectResult<sp_FetchBooks_Search_Only_Result> sp_FetchBooks_Search_Only(Nullable<int> page_number, Nullable<int> is_available, Nullable<int> page_size, string search_text)
+        {
+            var page_numberParameter = page_number.HasValue ?
+                new ObjectParameter("page_number", page_number) :
+                new ObjectParameter("page_number", typeof(int));
+    
+            var is_availableParameter = is_available.HasValue ?
+                new ObjectParameter("is_available", is_available) :
+                new ObjectParameter("is_available", typeof(int));
+    
+            var page_sizeParameter = page_size.HasValue ?
+                new ObjectParameter("page_size", page_size) :
+                new ObjectParameter("page_size", typeof(int));
+    
+            var search_textParameter = search_text != null ?
+                new ObjectParameter("search_text", search_text) :
+                new ObjectParameter("search_text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FetchBooks_Search_Only_Result>("sp_FetchBooks_Search_Only", page_numberParameter, is_availableParameter, page_sizeParameter, search_textParameter);
+        }
     }
 }

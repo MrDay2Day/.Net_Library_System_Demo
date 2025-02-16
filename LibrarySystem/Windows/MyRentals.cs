@@ -10,12 +10,14 @@ using System.Windows.Forms;
 
 namespace LibrarySystem.Windows
 {
-    public partial class AddBook : Form
+    public partial class MyRentals : Form
     {
-
-        public AddBook()
+        private User systemUser;
+        public MyRentals(User user)
         {
             InitializeComponent();
+            this.systemUser = user;
+            this.WindowState = FormWindowState.Maximized;
         }
     }
 }

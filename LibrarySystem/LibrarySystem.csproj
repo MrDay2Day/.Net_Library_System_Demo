@@ -90,6 +90,12 @@
     <Compile Include="sp_BorrowBook_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_FetchBooks_Search_Only_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_FetchBooks_Simple_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_ReturnBook_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -103,11 +109,59 @@
     <Compile Include="Windows\AddBook.Designer.cs">
       <DependentUpon>AddBook.cs</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AddUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\AddUser.Designer.cs">
+      <DependentUpon>AddUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CreateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\CreateUser.Designer.cs">
+      <DependentUpon>CreateUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MyRentals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MyRentals.Designer.cs">
+      <DependentUpon>MyRentals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Overdue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Overdue.Designer.cs">
+      <DependentUpon>Overdue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Payment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Payment.Designer.cs">
+      <DependentUpon>Payment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\UserAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\UserAccount.Designer.cs">
+      <DependentUpon>UserAccount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ViewAll.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\ViewAll.Designer.cs">
       <DependentUpon>ViewAll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ViewAllUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ViewAllUsers.Designer.cs">
+      <DependentUpon>ViewAllUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WarningPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\WarningPopUp.Designer.cs">
+      <DependentUpon>WarningPopUp.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
@@ -124,8 +178,23 @@
     <EmbeddedResource Include="Windows\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\CreateUser.resx">
+      <DependentUpon>CreateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MyRentals.resx">
+      <DependentUpon>MyRentals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Overdue.resx">
+      <DependentUpon>Overdue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Payment.resx">
+      <DependentUpon>Payment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ViewAll.resx">
       <DependentUpon>ViewAll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\WarningPopUp.resx">
+      <DependentUpon>WarningPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

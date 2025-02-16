@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace LibrarySystem.Windows
 {
-    public partial class AddBook : Form
+    public partial class Payment : Form
     {
-
-        public AddBook()
+        double amount;
+        public Payment(double _amount)
         {
             InitializeComponent();
+            this.amount = _amount;
         }
     }
 }

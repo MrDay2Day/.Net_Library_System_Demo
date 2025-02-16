@@ -148,6 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(254, 341);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_save_new);
@@ -166,6 +167,8 @@
             this.MinimumSize = new System.Drawing.Size(270, 380);
             this.Name = "AddBook";
             this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Book";
             this.ResumeLayout(false);
             this.PerformLayout();
