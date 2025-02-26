@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_ok = new System.Windows.Forms.Button();
-            this.title_box = new System.Windows.Forms.TextBox();
             this.msg_box = new System.Windows.Forms.TextBox();
+            this.title_box = new System.Windows.Forms.TextBox();
+            this.btn_ok = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,17 +46,18 @@
             this.panel1.Size = new System.Drawing.Size(277, 210);
             this.panel1.TabIndex = 0;
             // 
-            // btn_ok
+            // msg_box
             // 
-            this.btn_ok.BackColor = System.Drawing.SystemColors.Info;
-            this.btn_ok.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ok.Location = new System.Drawing.Point(74, 171);
-            this.btn_ok.Name = "btn_ok";
-            this.btn_ok.Size = new System.Drawing.Size(126, 23);
-            this.btn_ok.TabIndex = 1;
-            this.btn_ok.Text = "Close";
-            this.btn_ok.UseVisualStyleBackColor = false;
-            this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
+            this.msg_box.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.msg_box.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.msg_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.msg_box.Location = new System.Drawing.Point(20, 79);
+            this.msg_box.Multiline = true;
+            this.msg_box.Name = "msg_box";
+            this.msg_box.Size = new System.Drawing.Size(236, 86);
+            this.msg_box.TabIndex = 4;
+            this.msg_box.Text = "This is the message body.";
+            this.msg_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // title_box
             // 
@@ -71,18 +72,17 @@
             this.title_box.Text = "MESSAGE TITLE";
             this.title_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // msg_box
+            // btn_ok
             // 
-            this.msg_box.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.msg_box.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.msg_box.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.msg_box.Location = new System.Drawing.Point(20, 79);
-            this.msg_box.Multiline = true;
-            this.msg_box.Name = "msg_box";
-            this.msg_box.Size = new System.Drawing.Size(236, 86);
-            this.msg_box.TabIndex = 4;
-            this.msg_box.Text = "This is the message body.";
-            this.msg_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.btn_ok.BackColor = System.Drawing.SystemColors.Info;
+            this.btn_ok.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ok.Location = new System.Drawing.Point(74, 171);
+            this.btn_ok.Name = "btn_ok";
+            this.btn_ok.Size = new System.Drawing.Size(126, 23);
+            this.btn_ok.TabIndex = 1;
+            this.btn_ok.Text = "Close";
+            this.btn_ok.UseVisualStyleBackColor = false;
+            this.btn_ok.Click += new System.EventHandler(this.btn_ok_Click);
             // 
             // WarningPopUp
             // 
@@ -90,6 +90,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(294, 241);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(310, 280);
@@ -98,6 +99,7 @@
             this.Name = "WarningPopUp";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "WarningPopUp";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

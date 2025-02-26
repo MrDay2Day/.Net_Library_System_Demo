@@ -1,6 +1,10 @@
-﻿CREATE DATABASE Library_System;
+﻿--
+
+-- Create Database
+CREATE DATABASE Library_System;
 GO
 
+-- Use Database
 USE Library_System;
 GO
 
@@ -8,7 +12,8 @@ GO
 --		TABLES
 -- ###############################################################
 
-CREATE TABLE Users (
+-- Create Tables
+CREATE OR ALTER TABLE Users (
     User_id INT IDENTITY(1,1) PRIMARY KEY,
     First_name NVARCHAR(250) NOT NULL,
     Last_name NVARCHAR(250) NOT NULL,
@@ -50,8 +55,8 @@ CREATE TABLE Borrows (
     created_at DATETIME2 DEFAULT GETDATE() NOT NULL,
     updated_at DATETIME2 DEFAULT GETDATE() NOT NULL,
 	--
-	FOREIGN KEY (User_id) REFERENCES Users(User_id),
-	FOREIGN KEY (Book_id) REFERENCES Books(Book_id)
+	FOREIGN KEY (User_id) REFERENCES Users(User_id) ON DELETE CASCADE,
+	FOREIGN KEY (Book_id) REFERENCES Books(Book_id) ON DELETE CASCADE
 );
 GO
 
@@ -65,7 +70,7 @@ CREATE TABLE LateFeePayments (
     created_at DATETIME2 DEFAULT GETDATE() NOT NULL,
     updated_at DATETIME2 DEFAULT GETDATE() NOT NULL,
 	--
-	FOREIGN KEY (Borrow_id) REFERENCES Borrows(Borrow_id)
+	FOREIGN KEY (Borrow_id) REFERENCES Borrows(Borrow_id) ON DELETE CASCADE
 );
 GO
 
@@ -721,4 +726,17 @@ END;
 -- Return a book with custom late fee of $2 per day
 --EXEC sp_ReturnBook @borrow_id = 1, @daily_late_fee = 2.00;
 GO
+
+
+
+
+
+ALTER TABLE Borrows DROP CONSTRAINT FK__Borrows__User_id__59063A47;
+ALTER TABLE Borrows DROP CONSTRAINT FK__Borrows__Book_id__59FA5E80;
+
+ALTER TABLE Borrows ADD CONSTRAINT FK_Borrows_User
+    FOREIGN KEY (User_id) REFERENCES Users(User_id) ON DELETE CASCADE;
+
+ALTER TABLE Borrows ADD CONSTRAINT FK_Borrows_Book
+    FOREIGN KEY (Book_id) REFERENCES Books(Book_id) ON DELETE CASCADE;
 

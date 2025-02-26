@@ -23,12 +23,9 @@ namespace LibrarySystem.Windows
 
         private void btn_ok_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK; // Close dialog with OK result
             this.Close();
         }
 
-        public void OpenAsDialog()
-        {
-            using (this) { }
-        }
     }
 }

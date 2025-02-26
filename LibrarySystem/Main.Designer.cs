@@ -34,7 +34,6 @@
             this.mbtb_user_account = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_logout = new System.Windows.Forms.ToolStripMenuItem();
             this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mbtn_add_book = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_view_all_books = new System.Windows.Forms.ToolStripMenuItem();
             this.myRentalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_overdue = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +63,7 @@
             this.mbtn_user_manage});
             this.main_menu.Location = new System.Drawing.Point(0, 0);
             this.main_menu.Name = "main_menu";
-            this.main_menu.Size = new System.Drawing.Size(804, 24);
+            this.main_menu.Size = new System.Drawing.Size(844, 24);
             this.main_menu.TabIndex = 1;
             this.main_menu.Text = "menuStrip1";
             // 
@@ -96,7 +95,6 @@
             // booksToolStripMenuItem
             // 
             this.booksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mbtn_add_book,
             this.mbtn_view_all_books,
             this.myRentalsToolStripMenuItem,
             this.mbtn_overdue});
@@ -104,32 +102,24 @@
             this.booksToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.booksToolStripMenuItem.Text = "Books";
             // 
-            // mbtn_add_book
-            // 
-            this.mbtn_add_book.Name = "mbtn_add_book";
-            this.mbtn_add_book.Size = new System.Drawing.Size(180, 22);
-            this.mbtn_add_book.Text = "Add Book";
-            this.mbtn_add_book.Visible = false;
-            this.mbtn_add_book.Click += new System.EventHandler(this.mbtn_add_book_Click);
-            // 
             // mbtn_view_all_books
             // 
             this.mbtn_view_all_books.Name = "mbtn_view_all_books";
-            this.mbtn_view_all_books.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_view_all_books.Size = new System.Drawing.Size(132, 22);
             this.mbtn_view_all_books.Text = "View All";
             this.mbtn_view_all_books.Click += new System.EventHandler(this.mbtn_view_all_books_Click);
             // 
             // myRentalsToolStripMenuItem
             // 
             this.myRentalsToolStripMenuItem.Name = "myRentalsToolStripMenuItem";
-            this.myRentalsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.myRentalsToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.myRentalsToolStripMenuItem.Text = "My Rentals";
             this.myRentalsToolStripMenuItem.Click += new System.EventHandler(this.myRentalsToolStripMenuItem_Click);
             // 
             // mbtn_overdue
             // 
             this.mbtn_overdue.Name = "mbtn_overdue";
-            this.mbtn_overdue.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_overdue.Size = new System.Drawing.Size(132, 22);
             this.mbtn_overdue.Text = "Overdue";
             this.mbtn_overdue.Visible = false;
             this.mbtn_overdue.Click += new System.EventHandler(this.mbtn_overdue_Click);
@@ -147,14 +137,14 @@
             // mbtn_add_user
             // 
             this.mbtn_add_user.Name = "mbtn_add_user";
-            this.mbtn_add_user.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_add_user.Size = new System.Drawing.Size(122, 22);
             this.mbtn_add_user.Text = "Add User";
             this.mbtn_add_user.Click += new System.EventHandler(this.mbtn_add_user_Click);
             // 
             // mbtn_view_all_users
             // 
             this.mbtn_view_all_users.Name = "mbtn_view_all_users";
-            this.mbtn_view_all_users.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_view_all_users.Size = new System.Drawing.Size(122, 22);
             this.mbtn_view_all_users.Text = "View All";
             this.mbtn_view_all_users.Click += new System.EventHandler(this.mbtn_view_all_users_Click);
             // 
@@ -167,7 +157,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.tb_email);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(257, 27);
+            this.panel1.Location = new System.Drawing.Point(277, 52);
             this.panel1.MaximumSize = new System.Drawing.Size(290, 350);
             this.panel1.MinimumSize = new System.Drawing.Size(290, 350);
             this.panel1.Name = "panel1";
@@ -245,19 +235,20 @@
             this.login_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.login_panel.Location = new System.Drawing.Point(0, 24);
             this.login_panel.Name = "login_panel";
-            this.login_panel.Size = new System.Drawing.Size(804, 437);
+            this.login_panel.Size = new System.Drawing.Size(844, 487);
             this.login_panel.TabIndex = 4;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 461);
+            this.ClientSize = new System.Drawing.Size(844, 511);
             this.Controls.Add(this.login_panel);
             this.Controls.Add(this.main_menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.main_menu;
+            this.MinimumSize = new System.Drawing.Size(860, 550);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Library System";
@@ -277,7 +268,6 @@
         private System.Windows.Forms.MenuStrip main_menu;
         private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mbtn_view_all_books;
-        private System.Windows.Forms.ToolStripMenuItem mbtn_add_book;
         private System.Windows.Forms.ToolStripMenuItem mbtn_user_manage;
         private System.Windows.Forms.ToolStripMenuItem mbtn_view_all_users;
         private System.Windows.Forms.ToolStripMenuItem mbtn_add_user;

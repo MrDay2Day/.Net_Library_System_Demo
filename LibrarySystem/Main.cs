@@ -20,6 +20,7 @@ namespace LibrarySystem
 
             main_menu.Visible = false;
 
+
         }
 
         private void InitialDB()
@@ -67,16 +68,17 @@ namespace LibrarySystem
                 {
                     case "ADMIN":
                         mbtn_user_manage.Visible = true;
-                        mbtn_add_book.Visible = true;
                         mbtn_overdue.Visible = true;
                         break;
                     case "STAFF":
-                        mbtn_add_book.Visible = true;
                         mbtn_overdue.Visible = true;
                         break;
                     default:
                         break;
                 }
+
+                UtilityFunctions.CloseAll(this);
+                UtilityFunctions.ShowMdiChild<ViewAll>(this, systemUser);
 
                 return;
             }
@@ -111,7 +113,6 @@ namespace LibrarySystem
             systemUser = null;
             mbtn_user_name.Text = "-";
             mbtn_user_manage.Visible = false;
-            mbtn_add_book.Visible = false;
             mbtn_overdue.Visible = false;
 
         }

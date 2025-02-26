@@ -109,11 +109,17 @@
     <Compile Include="Windows\AddBook.Designer.cs">
       <DependentUpon>AddBook.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AddUser.cs">
+    <Compile Include="Windows\ConfirmBorrow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\AddUser.Designer.cs">
-      <DependentUpon>AddUser.cs</DependentUpon>
+    <Compile Include="Windows\ConfirmBorrow.Designer.cs">
+      <DependentUpon>ConfirmBorrow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ConfirmModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ConfirmModal.Designer.cs">
+      <DependentUpon>ConfirmModal.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\CreateUser.cs">
       <SubType>Form</SubType>
@@ -177,6 +183,12 @@
     </Compile>
     <EmbeddedResource Include="Windows\AddBook.resx">
       <DependentUpon>AddBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ConfirmBorrow.resx">
+      <DependentUpon>ConfirmBorrow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ConfirmModal.resx">
+      <DependentUpon>ConfirmModal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>
