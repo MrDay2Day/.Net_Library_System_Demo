@@ -78,7 +78,7 @@
             // search_text
             // 
             this.search_text.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.search_text.Location = new System.Drawing.Point(18, 27);
+            this.search_text.Location = new System.Drawing.Point(18, 26);
             this.search_text.Name = "search_text";
             this.search_text.Size = new System.Drawing.Size(191, 20);
             this.search_text.TabIndex = 0;
@@ -88,7 +88,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 11);
+            this.label1.Location = new System.Drawing.Point(15, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 1;
@@ -461,7 +461,7 @@
             // type_selection
             // 
             this.type_selection.FormattingEnabled = true;
-            this.type_selection.Location = new System.Drawing.Point(18, 53);
+            this.type_selection.Location = new System.Drawing.Point(18, 52);
             this.type_selection.Name = "type_selection";
             this.type_selection.Size = new System.Drawing.Size(191, 21);
             this.type_selection.TabIndex = 28;
@@ -472,7 +472,7 @@
             this.btn_search.BackColor = System.Drawing.SystemColors.Info;
             this.btn_search.Enabled = false;
             this.btn_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_search.Location = new System.Drawing.Point(215, 25);
+            this.btn_search.Location = new System.Drawing.Point(215, 24);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(62, 22);
             this.btn_search.TabIndex = 27;
@@ -484,7 +484,7 @@
             // 
             this.btn_reset.BackColor = System.Drawing.SystemColors.Info;
             this.btn_reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_reset.Location = new System.Drawing.Point(215, 52);
+            this.btn_reset.Location = new System.Drawing.Point(215, 51);
             this.btn_reset.Name = "btn_reset";
             this.btn_reset.Size = new System.Drawing.Size(62, 22);
             this.btn_reset.TabIndex = 26;
