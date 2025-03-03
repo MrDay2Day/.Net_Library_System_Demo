@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -20,6 +21,8 @@ namespace LibrarySystem
 
             main_menu.Visible = false;
 
+            this.info_panel.Visible = true;
+
 
         }
 
@@ -36,12 +39,16 @@ namespace LibrarySystem
             }
         }
 
-        private void Login()
+        private async void Login()
         {
             try
             {
+                await Task.Delay(3000);
+
                 var email = tb_email.Text.Trim();
                 var password = tb_password.Text;
+
+               
 
                 SHA256 sha = new SHA256Managed();
                 byte[] data = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -55,7 +62,7 @@ namespace LibrarySystem
 
                 systemUser = db.Users.FirstOrDefault(u => u.Email == email && u.Password == hash_password);
                 if (systemUser == null)
-                {
+                {            
                     MessageBox.Show("Invalid credentials", "Login Error");
                     return;
 
@@ -83,11 +90,12 @@ namespace LibrarySystem
                 return;
             }
             catch (Exception err)
-            {
+            {       
                 MessageBox.Show("Something went wrong", "Login Error");
             }
             finally
             {
+                this.info_panel.Visible = true;
                 tb_email.Text = "";
                 tb_password.Text = "";
             }
@@ -102,6 +110,7 @@ namespace LibrarySystem
 
         private void btn_login_Click(object sender, EventArgs e)
         {
+            this.info_panel.Visible = false;
             Login();
         }
 
@@ -124,7 +133,7 @@ namespace LibrarySystem
 
         private void mbtb_user_account_Click(object sender, EventArgs e)
         {
-            using (UserAccount userAccount = (new UserAccount(systemUser))) { 
+            using (CreateUser userAccount = (new CreateUser(systemUser))) { 
                 userAccount.ShowDialog();
             }
         }

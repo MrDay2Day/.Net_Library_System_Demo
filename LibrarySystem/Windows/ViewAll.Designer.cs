@@ -35,6 +35,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.dg_book_list = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_new_book = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_borrow = new System.Windows.Forms.Button();
             this.btn_delete = new System.Windows.Forms.Button();
@@ -61,10 +62,9 @@
             this.count_available = new System.Windows.Forms.Label();
             this.count_not_available = new System.Windows.Forms.Label();
             this.type_selection = new System.Windows.Forms.ComboBox();
+            this.close_btn = new System.Windows.Forms.Button();
             this.btn_search = new System.Windows.Forms.Button();
             this.btn_reset = new System.Windows.Forms.Button();
-            this.close_btn = new System.Windows.Forms.Button();
-            this.btn_new_book = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -101,7 +101,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(844, 441);
+            this.panel1.Size = new System.Drawing.Size(844, 464);
             this.panel1.TabIndex = 2;
             // 
             // panel3
@@ -111,7 +111,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 87);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(844, 354);
+            this.panel3.Size = new System.Drawing.Size(844, 377);
             this.panel3.TabIndex = 3;
             // 
             // panel5
@@ -120,7 +120,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(235, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(609, 354);
+            this.panel5.Size = new System.Drawing.Size(609, 377);
             this.panel5.TabIndex = 1;
             // 
             // dg_book_list
@@ -134,7 +134,7 @@
             this.dg_book_list.Name = "dg_book_list";
             this.dg_book_list.ReadOnly = true;
             this.dg_book_list.ShowEditingIcon = false;
-            this.dg_book_list.Size = new System.Drawing.Size(609, 354);
+            this.dg_book_list.Size = new System.Drawing.Size(609, 377);
             this.dg_book_list.TabIndex = 0;
             this.dg_book_list.Click += new System.EventHandler(this.dg_book_list_Click);
             // 
@@ -159,8 +159,22 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(235, 354);
+            this.panel4.Size = new System.Drawing.Size(235, 377);
             this.panel4.TabIndex = 0;
+            // 
+            // btn_new_book
+            // 
+            this.btn_new_book.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btn_new_book.Enabled = false;
+            this.btn_new_book.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_new_book.Location = new System.Drawing.Point(18, 10);
+            this.btn_new_book.Name = "btn_new_book";
+            this.btn_new_book.Size = new System.Drawing.Size(75, 23);
+            this.btn_new_book.TabIndex = 26;
+            this.btn_new_book.Text = "New Book";
+            this.btn_new_book.UseVisualStyleBackColor = false;
+            this.btn_new_book.Visible = false;
+            this.btn_new_book.Click += new System.EventHandler(this.btn_new_book_Click);
             // 
             // btn_clear
             // 
@@ -334,7 +348,7 @@
             this.panel7.Controls.Add(this.btn_next);
             this.panel7.Controls.Add(this.btn_prev);
             this.panel7.Controls.Add(this.count_pagination);
-            this.panel7.Location = new System.Drawing.Point(426, 17);
+            this.panel7.Location = new System.Drawing.Point(426, 18);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(198, 53);
             this.panel7.TabIndex = 30;
@@ -467,6 +481,21 @@
             this.type_selection.TabIndex = 28;
             this.type_selection.SelectedValueChanged += new System.EventHandler(this.type_selection_SelectedValueChanged_1);
             // 
+            // close_btn
+            // 
+            this.close_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.close_btn.BackColor = System.Drawing.Color.IndianRed;
+            this.close_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.close_btn.ForeColor = System.Drawing.SystemColors.Window;
+            this.close_btn.Location = new System.Drawing.Point(376, 14);
+            this.close_btn.Name = "close_btn";
+            this.close_btn.Size = new System.Drawing.Size(25, 23);
+            this.close_btn.TabIndex = 11;
+            this.close_btn.Text = "X";
+            this.close_btn.UseVisualStyleBackColor = false;
+            this.close_btn.Visible = false;
+            this.close_btn.Click += new System.EventHandler(this.close_btn_Click);
+            // 
             // btn_search
             // 
             this.btn_search.BackColor = System.Drawing.SystemColors.Info;
@@ -492,40 +521,11 @@
             this.btn_reset.UseVisualStyleBackColor = false;
             this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
-            // close_btn
-            // 
-            this.close_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.close_btn.BackColor = System.Drawing.Color.IndianRed;
-            this.close_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.close_btn.ForeColor = System.Drawing.SystemColors.Window;
-            this.close_btn.Location = new System.Drawing.Point(376, 14);
-            this.close_btn.Name = "close_btn";
-            this.close_btn.Size = new System.Drawing.Size(25, 23);
-            this.close_btn.TabIndex = 11;
-            this.close_btn.Text = "X";
-            this.close_btn.UseVisualStyleBackColor = false;
-            this.close_btn.Visible = false;
-            this.close_btn.Click += new System.EventHandler(this.close_btn_Click);
-            // 
-            // btn_new_book
-            // 
-            this.btn_new_book.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btn_new_book.Enabled = false;
-            this.btn_new_book.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_new_book.Location = new System.Drawing.Point(18, 10);
-            this.btn_new_book.Name = "btn_new_book";
-            this.btn_new_book.Size = new System.Drawing.Size(75, 23);
-            this.btn_new_book.TabIndex = 26;
-            this.btn_new_book.Text = "New Book";
-            this.btn_new_book.UseVisualStyleBackColor = false;
-            this.btn_new_book.Visible = false;
-            this.btn_new_book.Click += new System.EventHandler(this.btn_new_book_Click);
-            // 
             // ViewAll
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 441);
+            this.ClientSize = new System.Drawing.Size(844, 464);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.MaximizeBox = false;

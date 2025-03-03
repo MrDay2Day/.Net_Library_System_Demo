@@ -17,6 +17,12 @@ namespace LibrarySystem.Windows
         {
             InitializeComponent();
             this.systemUser = user;
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

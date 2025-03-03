@@ -208,6 +208,9 @@
     <EmbeddedResource Include="Windows\ViewAll.resx">
       <DependentUpon>ViewAll.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ViewAllUsers.resx">
+      <DependentUpon>ViewAllUsers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\WarningPopUp.resx">
       <DependentUpon>WarningPopUp.cs</DependentUpon>
     </EmbeddedResource>

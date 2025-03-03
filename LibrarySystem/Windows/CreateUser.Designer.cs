@@ -30,21 +30,21 @@
         {
             this.button2 = new System.Windows.Forms.Button();
             this.btn_save_new = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.info_last_name = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.info_first_name = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.info_email = new System.Windows.Forms.TextBox();
             this.Email = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.info_phone = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.info_password = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.info_password_retype = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.combo_userType = new System.Windows.Forms.ComboBox();
+            this.userTypeLable = new System.Windows.Forms.Label();
+            this.form_title = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button2
@@ -58,6 +58,7 @@
             this.button2.TabIndex = 25;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // btn_save_new
             // 
@@ -71,13 +72,13 @@
             this.btn_save_new.Text = "Save";
             this.btn_save_new.UseVisualStyleBackColor = false;
             // 
-            // textBox2
+            // info_last_name
             // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(56, 118);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(206, 20);
-            this.textBox2.TabIndex = 19;
+            this.info_last_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_last_name.Location = new System.Drawing.Point(56, 118);
+            this.info_last_name.Name = "info_last_name";
+            this.info_last_name.Size = new System.Drawing.Size(206, 20);
+            this.info_last_name.TabIndex = 19;
             // 
             // label3
             // 
@@ -88,13 +89,13 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "Last Name";
             // 
-            // textBox1
+            // info_first_name
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(56, 77);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(206, 20);
-            this.textBox1.TabIndex = 17;
+            this.info_first_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_first_name.Location = new System.Drawing.Point(56, 77);
+            this.info_first_name.Name = "info_first_name";
+            this.info_first_name.Size = new System.Drawing.Size(206, 20);
+            this.info_first_name.TabIndex = 17;
             // 
             // label2
             // 
@@ -105,23 +106,13 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "First Name";
             // 
-            // label1
+            // info_email
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(112, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 13);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Add New User";
-            // 
-            // textBox3
-            // 
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Location = new System.Drawing.Point(56, 160);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(206, 20);
-            this.textBox3.TabIndex = 27;
+            this.info_email.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_email.Location = new System.Drawing.Point(56, 160);
+            this.info_email.Name = "info_email";
+            this.info_email.Size = new System.Drawing.Size(206, 20);
+            this.info_email.TabIndex = 27;
             // 
             // Email
             // 
@@ -132,13 +123,13 @@
             this.Email.TabIndex = 26;
             this.Email.Text = "Email";
             // 
-            // textBox4
+            // info_phone
             // 
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Location = new System.Drawing.Point(56, 202);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(206, 20);
-            this.textBox4.TabIndex = 29;
+            this.info_phone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_phone.Location = new System.Drawing.Point(56, 202);
+            this.info_phone.Name = "info_phone";
+            this.info_phone.Size = new System.Drawing.Size(206, 20);
+            this.info_phone.TabIndex = 29;
             // 
             // label4
             // 
@@ -149,13 +140,14 @@
             this.label4.TabIndex = 28;
             this.label4.Text = "Phone";
             // 
-            // textBox5
+            // info_password
             // 
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox5.Location = new System.Drawing.Point(56, 309);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(206, 20);
-            this.textBox5.TabIndex = 31;
+            this.info_password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_password.Location = new System.Drawing.Point(56, 309);
+            this.info_password.Name = "info_password";
+            this.info_password.PasswordChar = '*';
+            this.info_password.Size = new System.Drawing.Size(206, 20);
+            this.info_password.TabIndex = 31;
             // 
             // label5
             // 
@@ -166,13 +158,14 @@
             this.label5.TabIndex = 30;
             this.label5.Text = "Password";
             // 
-            // textBox6
+            // info_password_retype
             // 
-            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox6.Location = new System.Drawing.Point(56, 349);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(206, 20);
-            this.textBox6.TabIndex = 33;
+            this.info_password_retype.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.info_password_retype.Location = new System.Drawing.Point(56, 349);
+            this.info_password_retype.Name = "info_password_retype";
+            this.info_password_retype.PasswordChar = '*';
+            this.info_password_retype.Size = new System.Drawing.Size(206, 20);
+            this.info_password_retype.TabIndex = 33;
             // 
             // label6
             // 
@@ -183,22 +176,33 @@
             this.label6.TabIndex = 32;
             this.label6.Text = "Re-Type Password";
             // 
-            // comboBox1
+            // combo_userType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(56, 254);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 34;
+            this.combo_userType.FormattingEnabled = true;
+            this.combo_userType.Location = new System.Drawing.Point(56, 254);
+            this.combo_userType.Name = "combo_userType";
+            this.combo_userType.Size = new System.Drawing.Size(121, 21);
+            this.combo_userType.TabIndex = 34;
             // 
-            // label7
+            // userTypeLable
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(53, 238);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 35;
-            this.label7.Text = "User Type";
+            this.userTypeLable.AutoSize = true;
+            this.userTypeLable.Location = new System.Drawing.Point(53, 238);
+            this.userTypeLable.Name = "userTypeLable";
+            this.userTypeLable.Size = new System.Drawing.Size(56, 13);
+            this.userTypeLable.TabIndex = 35;
+            this.userTypeLable.Text = "User Type";
+            // 
+            // form_title
+            // 
+            this.form_title.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.form_title.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.form_title.Location = new System.Drawing.Point(56, 32);
+            this.form_title.Name = "form_title";
+            this.form_title.Size = new System.Drawing.Size(206, 19);
+            this.form_title.TabIndex = 36;
+            this.form_title.Text = "Add New User";
+            this.form_title.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // CreateUser
             // 
@@ -206,23 +210,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(314, 451);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.form_title);
+            this.Controls.Add(this.userTypeLable);
+            this.Controls.Add(this.combo_userType);
+            this.Controls.Add(this.info_password_retype);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.info_password);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.info_phone);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.info_email);
             this.Controls.Add(this.Email);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_save_new);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.info_last_name);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.info_first_name);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(330, 490);
             this.MinimizeBox = false;
@@ -241,20 +245,20 @@
 
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btn_save_new;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox info_last_name;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox info_first_name;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox info_email;
         private System.Windows.Forms.Label Email;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox info_phone;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox info_password;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox info_password_retype;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox combo_userType;
+        private System.Windows.Forms.Label userTypeLable;
+        private System.Windows.Forms.TextBox form_title;
     }
 }
