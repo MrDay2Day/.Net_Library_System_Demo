@@ -1,4 +1,4 @@
-INSERT INTO Users 
+INSERT INTO Users
 	(First_name, Last_name, Email, Phone, Type, Password, Blocked) 
 VALUES
 	-- STAFF Users

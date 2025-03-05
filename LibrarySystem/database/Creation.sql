@@ -13,7 +13,7 @@ GO
 -- ###############################################################
 
 -- Create Tables
-CREATE OR ALTER TABLE Users (
+CREATE TABLE Users (
     User_id INT IDENTITY(1,1) PRIMARY KEY,
     First_name NVARCHAR(250) NOT NULL,
     Last_name NVARCHAR(250) NOT NULL,
