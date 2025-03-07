@@ -117,12 +117,12 @@ namespace LibrarySystem
         private void mbtn_logout_Click(object sender, EventArgs e)
         {
             UtilityFunctions.CloseAll(this);
-            login_panel.Visible = true;
-            main_menu.Visible = false;
-            systemUser = null;
-            mbtn_user_name.Text = "-";
-            mbtn_user_manage.Visible = false;
-            mbtn_overdue.Visible = false;
+            this.login_panel.Visible = true;
+            this.main_menu.Visible = false;
+            this.systemUser = null;
+            this.mbtn_user_name.Text = "-";
+            this.mbtn_user_manage.Visible = false;
+            this.mbtn_overdue.Visible = false;
 
         }
 
