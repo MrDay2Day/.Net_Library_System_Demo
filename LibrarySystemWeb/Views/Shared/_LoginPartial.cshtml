@@ -5,12 +5,14 @@
     @{
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
+        var firstName = User.FindFirst("FirstName")?.Value;
+
     }
 
     @if (user.Identity != null && user.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" href="/Home/Profile">Hello @user.Identity.Name!</a>
+            <a class="nav-link text-dark" href="/Home/Profile">Hello @firstName!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" method="post" action="/Home/Logout">

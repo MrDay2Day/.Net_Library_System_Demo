@@ -1,9 +1,10 @@
+using System.Security.Claims;
 using LibrarySystemWeb.Models;
 using LibrarySystemWeb.Models.Auth;
+using LibrarySystemWeb.Utils.Classes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace LibrarySystemWeb.Controllers
 {
@@ -46,7 +47,7 @@ namespace LibrarySystemWeb.Controllers
 
             try
             {
-                var user = await _userService.ValidateUserAsync(model.Username, model.Password);
+                User user = await _userService.ValidateUserAsync(model.Email, model.Password);
 
                 if (user == null)
                 {
@@ -54,10 +55,22 @@ namespace LibrarySystemWeb.Controllers
                     return View(model);
                 }
 
+                UserInfo info = new()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    UserId = user.UserId,
+                    UserType = user.Type
+                };
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "Individual")
+                    new Claim(ClaimTypes.Name, model.Email),
+                    new Claim(ClaimTypes.Role, "Individual"),
+                    new Claim("FirstName", user.FirstName),
+                    new Claim("LastName", user.LastName),
+                    new Claim("UserType", user.Type.ToString()),
+                    new Claim("UserId", user.UserId.ToString())
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

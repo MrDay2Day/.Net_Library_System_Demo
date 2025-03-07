@@ -2,6 +2,6 @@
 {
     public interface IUserService
     {
-        Task<User> ValidateUserAsync(string username, string password);
+        Task<User> ValidateUserAsync(string email, string password);
     }
 }
