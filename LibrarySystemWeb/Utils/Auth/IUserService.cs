@@ -1,4 +1,6 @@
-﻿namespace LibrarySystemWeb.Models.Auth
+﻿using LibrarySystemWeb.Models;
+
+namespace LibrarySystemWeb.Utils.Auth
 {
     public interface IUserService
     {

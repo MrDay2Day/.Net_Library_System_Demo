@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using LibrarySystemWeb.Models.Auth;
+using LibrarySystemWeb.Utils.Auth;
 
 namespace LibrarySystemWeb.Models
 {

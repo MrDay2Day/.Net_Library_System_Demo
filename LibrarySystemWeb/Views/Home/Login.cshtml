@@ -3,7 +3,7 @@
     ViewData["Title"] = "Login";
 }
 <h3>Login</h3>
-<form method="post" action="@Url.Action("Login", "Home")">
+<form method="post" asp-action="Login" asp-controller="Home" asp-route-returnUrl="@ViewData["ReturnUrl"]">
     <div class="form-group">
         <label for="Username">Username:</label>
         <input asp-for="Email" class="form-control" />

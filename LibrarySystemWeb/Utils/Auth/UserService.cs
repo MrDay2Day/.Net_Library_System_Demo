@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 using LibrarySystemWeb.Data;
-using LibrarySystemWeb.Models.Auth;
+using LibrarySystemWeb.Models;
 
-namespace LibrarySystemWeb.Models.Utils
+namespace LibrarySystemWeb.Utils.Auth
 {
 
     public class UserService : IUserService

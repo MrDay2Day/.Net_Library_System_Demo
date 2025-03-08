@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using LibrarySystemWeb.Models;
-using LibrarySystemWeb.Models.Auth;
+using LibrarySystemWeb.Utils.Auth;
+using LibrarySystemWeb.Utils.Auth.RouteFilter;
 using LibrarySystemWeb.Utils.Classes;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibrarySystemWeb.Controllers
@@ -23,21 +25,46 @@ namespace LibrarySystemWeb.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();
         }
+        [HttpGet]
+        [AdminOnly]
+        public IActionResult AdminOnly()
+        {
+            //var userType = User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+
+            //if (userType != "ADMIN")
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
+
+            return View();
+        }
+        [HttpGet]
+        public IActionResult UsersOnly()
+        {
+            var userType = User.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+
+            if (userType != "USER")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
-            // Return the login view with an empty model
+            ViewData["ReturnUrl"] = returnUrl;
             return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +115,17 @@ namespace LibrarySystemWeb.Controllers
                 // Notify Blazor immediately about auth state change
                 _authStateProvider.NotifyAuthenticationStateChangedManually();
 
-                return RedirectToAction("Index");
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+
+                }
+
+
             }
             catch (Exception ex)
             {

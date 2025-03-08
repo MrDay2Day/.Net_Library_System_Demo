@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace LibrarySystemWeb.Models.Auth
+namespace LibrarySystemWeb.Utils.Auth
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {

@@ -5,7 +5,7 @@
     @{
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        var firstName = User.FindFirst("FirstName")?.Value;
+        var firstName = user.FindFirst("FirstName")?.Value;
 
     }
 

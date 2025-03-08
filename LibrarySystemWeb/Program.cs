@@ -1,9 +1,9 @@
 using LibrarySystemWeb.Data;
-using LibrarySystemWeb.Models.Auth;
-using LibrarySystemWeb.Models.Utils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using LibrarySystemWeb.Utils.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
