@@ -12,12 +12,15 @@
 
     <!-- Modified form to submit to the parent page -->
     <form method="get" action="/">
-        <input placeholder="Search" type="text" style="margin-bottom: 10px; margin-top: 20px;" name="searchText" value="@Model.SearchText" />
-        <br />
+
+        <div class="form-group" style="width: 300px; display: flex; justify-content: center; width: 100%;">
+            <input placeholder="Search" type="text" style="margin-bottom: 10px; margin-top: 20px; width: 405px;" name="searchText" value="@Model.SearchText" class="form-control" />
+        </div>
+            
         <input type="hidden" name="pageNum" value="1" /> <!-- Always start at page 1 for new searches -->
         <input type="hidden" name="searchType" value="@Model.SearchType" />
-        <button class="btn btn-primary" type="submit">Search</button>
-        <a class="btn btn-secondary" href="/?pageNum=1&searchType=@Model.SearchType&searchText=">Reset</a>
+        <button class="btn btn-primary" style="width: 200px;" type="submit">Search</button>
+        <a class="btn btn-secondary" style="width: 200px;" href="/?pageNum=1&searchType=@Model.SearchType&searchText=">Reset</a>
     </form>
 
     <div class="pagination-container d-flex justify-content-center" style="margin-top: 40px;">
