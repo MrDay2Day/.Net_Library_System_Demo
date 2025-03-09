@@ -12,11 +12,10 @@
 
     <!-- Modified form to submit to the parent page -->
     <form method="get" action="/">
-
         <div class="form-group" style="width: 300px; display: flex; justify-content: center; width: 100%;">
             <input placeholder="Search" type="text" style="margin-bottom: 10px; margin-top: 20px; width: 405px;" name="searchText" value="@Model.SearchText" class="form-control" />
         </div>
-            
+
         <input type="hidden" name="pageNum" value="1" /> <!-- Always start at page 1 for new searches -->
         <input type="hidden" name="searchType" value="@Model.SearchType" />
         <button class="btn btn-primary" style="width: 200px;" type="submit">Search</button>
@@ -69,8 +68,9 @@
                     <td scope="row">
                         @if (book.Available)
                         {
-                            <button class="btn btn-primary">Borrow</button>
-                        }</td>
+                            <button class="btn btn-primary borrow-btn" data-book-id="@book.Book_id" data-book-title="@book.Title">Borrow</button>
+                        }
+                    </td>
                     <td>@book.Title</td>
                     <td>@book.Description</td>
                     <td>@book.Author</td>
@@ -108,3 +108,66 @@
         </nav>
     </div>
 </div>
+
+<!-- Borrow Modal -->
+<div class="modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="borrowModalLabel">Borrow Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="borrowFormContainer">
+                    @* <partial name="Components/_BorrowPartial" /> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.borrow-btn').click(function() {
+                var bookId = $(this).data('book-id');
+                var bookTitle = $(this).data('book-title');
+
+                // $('#borrowFormContainer').load('/Book/BorrowForm?bookId=' + bookId + '&bookTitle=' + encodeURIComponent(bookTitle), function() {
+                    $('#borrowModal').modal('show');
+                // });
+            });
+
+            // Handle form submission via AJAX
+            $(document).on('submit', '#borrowForm', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(result) {
+                        if (result.success) {
+                            // Close the modal
+                            $('#borrowModal').modal('hide');
+
+                            // Show success message
+                            alert(result.message);
+
+                            // Reload the current page to refresh the book list
+                            location.reload();
+                        } else {
+                            // Display error message
+                            $('#borrowFormError').text(result.message).show();
+                        }
+                    },
+                    error: function() {
+                        $('#borrowFormError').text('An error occurred. Please try again.').show();
+                    }
+                });
+            });
+        });
+    </script>
+}
