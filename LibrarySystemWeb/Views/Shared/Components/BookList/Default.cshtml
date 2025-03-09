@@ -1,0 +1,19 @@
+﻿@model List<LibrarySystemWeb.Models.Book>
+
+<div class="book-list">
+    <h3 style="margin-top: 40px; margin-bottom: 40px;">Featured Books</h3>
+    <div class="row" >
+        @foreach (var book in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card" style="height: 250px;">
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@book.Author</h6>
+                        <p class="card-text">@book.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

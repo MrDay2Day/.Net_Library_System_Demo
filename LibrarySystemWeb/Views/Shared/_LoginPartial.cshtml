@@ -12,7 +12,7 @@
     @if (user.Identity != null && user.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" href="/Home/Profile">Hello @firstName!</a>
+            <a class="nav-link text-dark" href="/Home/Account">Hello @firstName!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" method="post" action="/Home/Logout">

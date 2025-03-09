@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using LibrarySystemWeb.Utils.Auth;
+using LibrarySystemWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("CloudDB")
-                      ?? throw new InvalidOperationException("Connection string 'CloudDB' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("CloudDB")
+//                      ?? throw new InvalidOperationException("Connection string 'CloudDB' not found.");
 
-// Register database contexts
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+//// Register database contexts
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<LibrarySystemContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<LibrarySystemContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -33,8 +33,10 @@ builder.Services.AddScoped<CustomAuthStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
     provider.GetRequiredService<CustomAuthStateProvider>());
 
-// Register user service
+// Register Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<BooksService>();
+builder.Services.AddScoped<UserServices>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

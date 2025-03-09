@@ -24,12 +24,16 @@ public partial class LibrarySystemContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public DbSet<SearchResult> SearchResults { get; set; } = null!;
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=23.95.235.16;Database=Library_System;User Id=vtdi_student;Password=P@ssword1;MultipleActiveResultSets=true;Encrypt=false");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=23.95.235.16;Database=Library_System;User Id=vtdi_student;Password=P@ssword1;MultipleActiveResultSets=true;Encrypt=true;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<SearchResult>().HasNoKey();
+
         modelBuilder.Entity<Book>(entity =>
         {
             entity.HasKey(e => e.BookId).HasName("PK__Books__C220CF9C69D4F566");
