@@ -27,7 +27,7 @@ namespace LibrarySystemWeb.Components
 
 
             Console.WriteLine($"BE - pageNum: {pageNum},  searchType: {searchType},  searchText: {searchText}." );
-            int pageSize = 10; // Number of items per page
+            int pageSize = 20; // Number of items per page
 
             // Ensure search text is valid
             string search = string.IsNullOrEmpty(searchText) ? "" : searchText;

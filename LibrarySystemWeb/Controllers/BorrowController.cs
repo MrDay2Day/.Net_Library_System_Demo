@@ -1,38 +1,50 @@
 ﻿using LibrarySystemWeb.Data;
 using LibrarySystemWeb.Models;
+using LibrarySystemWeb.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Drawing.Printing;
 using System.Threading.Tasks;
 
 namespace LibrarySystemWeb.Controllers
 {
-    public class BookController : Controller
+    public class BorrowController : Controller
     {
         private readonly LibrarySystemContext _context;
+        private readonly BooksService _booksService;
 
-        public BookController(LibrarySystemContext context)
+        public BorrowController(LibrarySystemContext context, BooksService booksService)
         {
             _context = context;
+            _booksService = booksService;
         }
 
 
         [HttpGet]
-        public IActionResult BorrowForm(int bookId, string bookTitle)
+        [Authorize]
+        public async Task<IActionResult> BorrowAsync(int bookId, int pageNumber = 1, int pageSize = 10)
         {
-            var model = new BorrowViewModel
-            {
-                BookId = bookId,
-                BookTitle = bookTitle,
-                BorrowDays = 5 // Default selection
-            };
+            // Fetch paginated books and total count
+            var (books, totalCount) = await _booksService.GetBooksPaginatedAsync(pageNumber, pageSize);
 
-            return PartialView("_BorrowForm", model);
+            // Calculate the total number of pages
+            int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+
+            Console.WriteLine($"BookId: {bookId}");
+            Book book = _context.Books.Find(bookId);
+            BorrowPageModel model = new BorrowPageModel() {
+                book = book,
+                Books = books,
+            };
+            return View(model);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> BorrowBook(BorrowViewModel model)
+        public async Task<IActionResult> Borrow(BorrowViewModel model)
         {
             if (!ModelState.IsValid)
             {
