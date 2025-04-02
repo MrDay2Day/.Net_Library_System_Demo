@@ -2,7 +2,7 @@
 using LibrarySystemWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LibrarySystemWeb.Components
+namespace LibrarySystemWeb.Views.Shared.Components.BookList
 {
     // In Components folder
     public class BookListViewComponent : ViewComponent
@@ -15,12 +15,6 @@ namespace LibrarySystemWeb.Components
             _booksService = booksService;
             _db = db;
         }
-
-        //public async Task<IViewComponentResult> InvokeAsync(int count = 5)
-        //{
-        //    var books = await _booksService.GetBooksAsync(count);
-        //    return View(books);
-        //}
 
         public IViewComponentResult Invoke()
         {

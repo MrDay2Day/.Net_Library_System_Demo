@@ -22,6 +22,18 @@ namespace LibrarySystemWeb.Controllers
             _booksService = booksService;
         }
 
+        [HttpGet]
+        [Authorize]
+        public  IActionResult MyBooks(int pageNum = 1)
+        {
+            MyBooksListViewModel model = new ()
+            {
+                pageNum = 1
+            };
+
+            return View("MyBooks");
+        }
+
 
         [HttpGet]
         [Authorize]

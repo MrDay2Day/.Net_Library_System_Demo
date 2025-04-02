@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LibrarySystemWeb.Components
+namespace LibrarySystemWeb.Views.Shared.Components.BookSearch
 {
     public class BookSearchViewComponent : ViewComponent
     {
@@ -19,14 +19,14 @@ namespace LibrarySystemWeb.Components
             _db = db;
         }
 
-        public async Task<IViewComponentResult > InvokeAsync(int pageNum = 1, int searchType = 1, string searchText = "")
+        public async Task<IViewComponentResult> InvokeAsync(int pageNum = 1, int searchType = 1, string searchText = "")
         {
 
 
             Console.WriteLine(" \n\n\nINVOKED\n\n\n");
 
 
-            Console.WriteLine($"BE - pageNum: {pageNum},  searchType: {searchType},  searchText: {searchText}." );
+            Console.WriteLine($"BE - pageNum: {pageNum},  searchType: {searchType},  searchText: {searchText}.");
             int pageSize = 20; // Number of items per page
 
             // Ensure search text is valid

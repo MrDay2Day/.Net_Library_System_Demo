@@ -1,0 +1,38 @@
+﻿@model LibrarySystemWeb.Models.MyBooksListViewModel
+
+@{
+    int nextPage = Model.pageNum + 1 > Model.maxPages ? Model.maxPages : Model.pageNum + 1;
+    int previousPage = Model.pageNum - 1 > 1 ? Model.pageNum - 1 : 1;
+    int maxPage = Model.maxPages;
+    int pageNum = Model.pageNum;
+    int currentPage = Model.currentPage;
+
+    Console.WriteLine("MyBooksList: \n" +
+                      "pageNum " + Model.pageNum + "\n" +
+                      "maxPages " + Model.maxPages + "\n" +
+                      "currentPage " + Model.currentPage + "\n");
+}
+
+<div class="container" style="width: 100%;">
+    <h3>My Book list goes here!</h3>
+    <p>Page: @pageNum</p>
+
+    <hr/>
+
+    @* <form method="post" asp-action="Login" asp-controller="Home" asp-route-returnUrl="@ViewData["ReturnUrl"]" style="max-width: 300px; width: 100%;"> *@
+    @*     <div class="form-group"> *@
+    @*         <label for="Entry">Username:</label> *@
+    @*         <input asp-for="Entry" class="form-control" /> *@
+    @*         <span asp-validation-for="text" class="text-danger"></span> *@
+    @*     </div> *@
+    @*     <button type="submit" style="margin-top: 20px; width: 100%;" class="btn btn-primary">Login</button> *@
+    @* </form> *@
+
+    @await Component.InvokeAsync("Pagination", new {
+            previousPage = previousPage,
+            nextPage = nextPage,
+            maxPage = maxPage,
+            currentPage = currentPage,
+    })
+    
+</div>
