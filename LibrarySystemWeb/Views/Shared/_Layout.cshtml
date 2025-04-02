@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LibrarySystemWeb.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
+<body style="height: 100%; background-color: white;">
+    <header style="position: sticky; top: 0; z-index: 60;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/LS.png" width="30" /> @if(!isAuth){<span>Library System</span>}</a>
@@ -65,7 +65,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style="position: fixed; bottom: 0; z-index: 50; background-color: white;">
         <div class="container">
             &copy; 2025 - Library System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> | <a asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
         </div>

@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Drawing.Printing;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Drawing.Printing;
 
 namespace LibrarySystemWeb.Controllers
 {
@@ -26,88 +27,102 @@ namespace LibrarySystemWeb.Controllers
         [Authorize]
         public async Task<IActionResult> BorrowAsync(int bookId, int pageNumber = 1, int pageSize = 10)
         {
-            // Fetch paginated books and total count
             var (books, totalCount) = await _booksService.GetBooksPaginatedAsync(pageNumber, pageSize);
-
-            // Calculate the total number of pages
             int totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
-
             Console.WriteLine($"BookId: {bookId}");
-            Book book = _context.Books.Find(bookId);
-            BorrowPageModel model = new BorrowPageModel() {
+            Book book = await _context.Books.FindAsync(bookId); // Use FindAsync
+            if (book == null)
+            {
+                return NotFound("Book not found."); // Return a 404 if the book is not found
+            }
+
+            BorrowPageModel model = new BorrowPageModel()
+            {
                 book = book,
                 Books = books,
             };
-            return View(model);
+            return View("Borrow", model);
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> Borrow(BorrowViewModel model)
+        [Authorize] // Ensure that only authenticated users can borrow
+        public async Task<IActionResult> Borrow(BorrowPageModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return Json(new { success = false, message = "Invalid form data." });
-            }
+
+            Console.WriteLine("Model Data:");
+            Console.WriteLine($"  book: {model.book}"); // Consider logging book properties if needed
+            Console.WriteLine($"  borrowed: {model.borrowed}");
+            Console.WriteLine($"  success: {model.success}");
+            Console.WriteLine($"  Books: {model.Books}"); // Consider logging book list if needed
+            Console.WriteLine($"  message: {model.message}");
+            Console.WriteLine($"  Days: {model.Days}");
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View("Borrow", model);
+            //}
 
             try
             {
-                // Check if book is still available
-                var book = await _context.Books.FindAsync(model.BookId);
+                var userIdClaim = User.FindFirst("UserId");
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    model.message = "Invalid or missing user ID.";
+                    model.success = false;
+                    return View("Borrow", model);
+                }
 
+                var book = await _context.Books.FindAsync(model.book.BookId);
                 if (book == null)
                 {
-                    return Json(new { success = false, message = "Book not found." });
+                    model.message = "Book not found.";
+                    model.success = false;
+                    return View("Borrow", model);
                 }
 
                 if (!book.Available)
                 {
-                    return Json(new { success = false, message = "This book is no longer available." });
+                    model.message = "This book is no longer available.";
+                    model.success = false;
+                    return View("Borrow", model);
                 }
 
-                // Calculate return date
                 var borrowDate = DateTime.Now;
-                var returnDate = borrowDate.AddDays(model.BorrowDays);
+                var returnDate = borrowDate.AddDays(model.Days);
 
-                //// Create borrowing record
-                //var borrowing = new Borrowing
-                //{
-                //    BookId = model.BookId,
-                //    UserId = GetCurrentUserId(), // Implement this method based on your authentication system
-                //    BorrowDate = borrowDate,
-                //    ScheduleReturnDate = returnDate,
-                //    IsReturned = false
-                //};
+                var borrowing = new Borrow
+                {
+                    BookId = model.book.BookId,
+                    UserId = userId,
+                    BorrowDate = borrowDate,
+                    ScheduleReturnDate = returnDate,
+                };
 
-                //_context.Borrowings.Add(borrowing);
-
-                //// Update book availability
-                //book.IsAvailable = false;
-                //_context.Books.Update(book);
+                _context.Borrows.Add(borrowing);
+                book.Available = false;
+                _context.Books.Update(book);
 
                 await _context.SaveChangesAsync();
 
-                return Json(new
-                {
-                    success = true,
-                    message = $"Book borrowed successfully. Return date: {returnDate.ToString("yyyy-MM-dd")}"
-                });
+                var (books, totalCount) = await _booksService.GetBooksPaginatedAsync(1, 20);
+
+                Console.WriteLine("\n\nHERE\n\n");
+
+                model.message = "\""+book.Title+ "\"" + " was reserved successfully!";
+                model.success = true;
+                model.book = book;
+                model.Books = books;
+
+                return View("Borrow", model);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = $"Error: {ex.Message}" });
+                Console.WriteLine(ex.Message);
+                model.message = $"Error: {ex.Message}";
+                model.success = false;
+                return View("Borrow", model);
             }
-        }
-
-        private int GetCurrentUserId()
-        {
-            // TODO: Replace with actual user ID retrieval from your authentication system
-            // For example, using ASP.NET Core Identity:
-            // return int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            // Temporary placeholder:
-            return 1;
         }
     }
 }
