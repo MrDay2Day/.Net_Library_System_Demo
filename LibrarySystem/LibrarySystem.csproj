@@ -145,12 +145,6 @@
     <Compile Include="Windows\Payment.Designer.cs">
       <DependentUpon>Payment.cs</DependentUpon>
     </Compile>
-    <Compile Include="Windows\UserAccount.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\UserAccount.Designer.cs">
-      <DependentUpon>UserAccount.cs</DependentUpon>
-    </Compile>
     <Compile Include="Windows\ViewAll.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,9 +195,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Payment.resx">
       <DependentUpon>Payment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\UserAccount.resx">
-      <DependentUpon>UserAccount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ViewAll.resx">
       <DependentUpon>ViewAll.cs</DependentUpon>

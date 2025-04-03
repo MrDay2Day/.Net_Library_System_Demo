@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button2 = new System.Windows.Forms.Button();
+            this.cancelBtn = new System.Windows.Forms.Button();
             this.btn_save_new = new System.Windows.Forms.Button();
             this.info_last_name = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -47,18 +47,18 @@
             this.form_title = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button2
+            // cancelBtn
             // 
-            this.button2.BackColor = System.Drawing.Color.IndianRed;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.SystemColors.Window;
-            this.button2.Location = new System.Drawing.Point(168, 395);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 23);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.cancelBtn.BackColor = System.Drawing.Color.IndianRed;
+            this.cancelBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cancelBtn.ForeColor = System.Drawing.SystemColors.Window;
+            this.cancelBtn.Location = new System.Drawing.Point(168, 395);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(94, 23);
+            this.cancelBtn.TabIndex = 25;
+            this.cancelBtn.Text = "Cancel";
+            this.cancelBtn.UseVisualStyleBackColor = false;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // btn_save_new
             // 
@@ -71,6 +71,7 @@
             this.btn_save_new.TabIndex = 24;
             this.btn_save_new.Text = "Save";
             this.btn_save_new.UseVisualStyleBackColor = false;
+            this.btn_save_new.Click += new System.EventHandler(this.btn_save_new_Click);
             // 
             // info_last_name
             // 
@@ -221,7 +222,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.info_email);
             this.Controls.Add(this.Email);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.btn_save_new);
             this.Controls.Add(this.info_last_name);
             this.Controls.Add(this.label3);
@@ -243,7 +244,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Button btn_save_new;
         private System.Windows.Forms.TextBox info_last_name;
         private System.Windows.Forms.Label label3;
