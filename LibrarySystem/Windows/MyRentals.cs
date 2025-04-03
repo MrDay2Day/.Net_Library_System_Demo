@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,9 @@ namespace LibrarySystem.Windows
         private int perPage = 30; // Number of items per page
 
         private int bookIdNumber;
+        private int borrowIdNumber;
+        private Book selectedBook;
+        private double owed;
 
         public MyRentals(User user)
         {
@@ -64,6 +68,7 @@ namespace LibrarySystem.Windows
                 var result = borrowedBooks.Select(borrow => new
                 {
                     borrow.Book_id,
+                    borrow.Borrow_id,
                     borrow.Book.Title,
                     borrow.Book.Author,
                     borrow.Book.Description,
@@ -75,6 +80,7 @@ namespace LibrarySystem.Windows
                 dgvRentals.DataSource = result;
 
                 dgvRentals.Columns["Book_id"].Visible = false;
+                dgvRentals.Columns["Borrow_id"].Visible = false;
 
                 if (dgvRentals.Columns.Contains("Borrow_date"))
                 {
@@ -140,79 +146,137 @@ namespace LibrarySystem.Windows
 
         private void dgvRentals_Click(object sender, EventArgs e)
         {
-            if (dgvRentals.SelectedRows.Count > 0) // Ensure a row is selected
-            {
-                var id = dgvRentals.SelectedRows[0].Cells["Book_id"].Value;
-                Console.WriteLine($"Book ID for return: {id}");
-
-                if (id != null)
+            try
+            {                   
+                if (dgvRentals.SelectedRows.Count > 0) // Ensure a row is selected
                 {
-                    int bookId = int.Parse(id.ToString());
+                    var id = dgvRentals.SelectedRows[0].Cells["Book_id"].Value;
+                    var id_borrow = dgvRentals.SelectedRows[0].Cells["Borrow_id"].Value;
 
-                    // Find the row with the matching Book_id
-                    DataGridViewRow selectedRow = null;
-                    foreach (DataGridViewRow row in dgvRentals.Rows)
+                    if (id != null || id_borrow != null)
                     {
-                        if (row.Cells["Book_id"].Value != null && int.Parse(row.Cells["Book_id"].Value.ToString()) == bookId)
-                        {
-                            selectedRow = row;
-                            break;
-                        }
-                    }
+                        int bookId = int.Parse(id.ToString());
+                        borrowIdNumber = int.Parse(id_borrow.ToString());
 
-                    if (selectedRow != null)
-                    {
-                        bookIdNumber = bookId;
-                        returnBookBtn.Visible = true;
-                        returnBookBtn.Enabled = true;
-                        clearBookbtn.Visible = true;
-                        clearBookbtn.Enabled = true;
-                        textBox1.Text = selectedRow.Cells["Title"].Value?.ToString();
-                        textBox2.Text = selectedRow.Cells["Author"].Value?.ToString();
-                        textBox3.Text = selectedRow.Cells["Description"].Value?.ToString();
+                        Console.WriteLine($"Book ID for return: {bookId} & borrowid: {borrowIdNumber}");
 
-                        // Correct date parsing and formatting
-                        if (selectedRow.Cells["Schedule_return_date"].Value != null && selectedRow.Cells["Schedule_return_date"].Value != DBNull.Value)
+                        // Find the row with the matching Book_id
+                        DataGridViewRow selectedRow = null;
+                        foreach (DataGridViewRow row in dgvRentals.Rows)
                         {
-                            if (selectedRow.Cells["Schedule_return_date"].Value is DateTime scheduleReturnDate)
+                            if (row.Cells["Book_id"].Value != null && int.Parse(row.Cells["Book_id"].Value.ToString()) == bookId)
                             {
-                                textBox4.Text = scheduleReturnDate.ToString("yyyy-MM-dd"); // Format as yyyy-MM-dd
+                                selectedRow = row;
+                                break;
                             }
-                            else if (selectedRow.Cells["Schedule_return_date"].Value is string dateString)
+                        }
+
+                        if (selectedRow != null)
+                        {
+                            selectedBook = db.Books.FirstOrDefault(x => x.Book_id == bookId);
+                            if (selectedBook == null)
                             {
-                                DateTime parsedDate;
-                                if (DateTime.TryParse(dateString, out parsedDate))
+                                throw new Exception("Invalid Book");
+                            }
+                            bookIdNumber = bookId;
+                            returnBookBtn.Visible = true;
+                            returnBookBtn.Enabled = true;
+                            clearBookbtn.Visible = true;
+                            clearBookbtn.Enabled = true;
+                            textBox1.Text = selectedRow.Cells["Title"].Value?.ToString();
+                            textBox2.Text = selectedRow.Cells["Author"].Value?.ToString();
+                            textBox3.Text = selectedRow.Cells["Description"].Value?.ToString();
+
+                            // Correct date parsing and formatting
+                            if (selectedRow.Cells["Schedule_return_date"].Value != null && selectedRow.Cells["Schedule_return_date"].Value != DBNull.Value)
+                            {
+                                if (selectedRow.Cells["Schedule_return_date"].Value is DateTime scheduleReturnDate)
                                 {
-                                    textBox4.Text = parsedDate.ToString("yyyy-MM-dd");
+                                    textBox4.Text = scheduleReturnDate.ToString("yyyy-MM-dd"); // Format as yyyy-MM-dd
+                                }
+                                else if (selectedRow.Cells["Schedule_return_date"].Value is string dateString)
+                                {
+                                    DateTime parsedDate;
+                                    if (DateTime.TryParse(dateString, out parsedDate))
+                                    {
+                                        textBox4.Text = parsedDate.ToString("yyyy-MM-dd");
+                                    }
+                                    else
+                                    {
+                                        textBox4.Text = "Invalid Date"; // Handle invalid date strings
+                                    }
                                 }
                                 else
                                 {
-                                    textBox4.Text = "Invalid Date"; // Handle invalid date strings
+                                    textBox4.Text = "Unknown Date Type"; // Handle other unexpected types
                                 }
                             }
                             else
                             {
-                                textBox4.Text = "Unknown Date Type"; // Handle other unexpected types
+                                textBox4.Text = ""; 
                             }
+
+
+                            string fee = selectedRow.Cells["Fee"].Value?.ToString();
+                            Console.WriteLine("Fee: " + fee);
+
+                            if (!string.IsNullOrEmpty(fee))
+                            {
+                                string feePart = fee; 
+
+                                if (fee.Contains("$"))
+                                {
+                                    feePart = fee.Split('$')[1];
+                                    Console.WriteLine("feePart: " + feePart);
+                                }
+
+                                if (double.TryParse(feePart, out double parsedFee))
+                                {
+                                    owed = parsedFee;
+                                }
+                            }
+
+                            feeLabel.Text = fee;
                         }
                         else
                         {
-                            textBox4.Text = ""; // Set textbox to empty string if date is null or DBNull
-                        }
+                            //MessageBox.Show("Book ID not found in DataGridView.");
 
-                        feeLabel.Text = selectedRow.Cells["Fee"].Value?.ToString();
+                            using (WarningPopUp warning = (new WarningPopUp("Book Error", "Book Reference Error", $"Book ID not found in DataGridView.")))
+                            {
+                                if (warning.ShowDialog() == DialogResult.OK)
+                                {
+                                    //
+                                };
+                            }
+                        }
                     }
-                    else
+                }
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                using (WarningPopUp warning = (new WarningPopUp("System Error", "Critial System Error", $"System Error please contact support Code: 34853237.")))
+                {
+                    if (warning.ShowDialog() == DialogResult.OK)
                     {
-                        MessageBox.Show("Book ID not found in DataGridView.");
-                    }
+                        //
+                    };
                 }
             }
         }
 
         private void clearBookbtn_Click(object sender, EventArgs e)
         {
+            clear();
+        }
+
+        private void clear()
+        {
             bookIdNumber = -1;
+            borrowIdNumber = -1;
+            selectedBook = null;
             returnBookBtn.Visible = false;
             returnBookBtn.Enabled = false;
             clearBookbtn.Visible = false;
@@ -222,6 +286,107 @@ namespace LibrarySystem.Windows
             textBox3.Text = "";
             textBox4.Text = "";
             feeLabel.Text = "-";
+            owed = 0;
+        }
+
+        private void makePayment(double amount)
+        {
+            using (Payment paymentForm = (new Payment(amount)))
+            {
+                if(paymentForm.ShowDialog() == DialogResult.OK)
+                {
+                    returnBook();
+                }
+                else
+                {
+                    using (WarningPopUp warning = (new WarningPopUp("Payment Error", "Unable to Process", $"Unable to precess payment if this issue continues please contact support Code: 349374637.")))
+                    {
+                        if (warning.ShowDialog() == DialogResult.OK)
+                        {
+                            //
+                        };
+                    }
+                }
+            }
+        }
+
+        private void returnBookPrompt()
+        {
+            using (ConfirmModal confirmDelete = (new ConfirmModal("Return Book", "Returning Book", $"You are about to return {selectedBook.Title} by {selectedBook.Author}. This action cannot be undone! Are you sure you want to continue with this action?")))
+            {
+                if (confirmDelete.ShowDialog() == DialogResult.OK)
+                {
+                    Console.WriteLine("Owed: " + owed);
+                    if (owed > 0)
+                    {
+                        makePayment(owed);
+                    }
+                    else
+                    {
+                        returnBook(); 
+                    }
+                    //
+                };
+            }
+        }
+
+        private void returnBook() 
+        {
+            try
+            {
+               
+                decimal decimalFee = Decimal.Parse(owed.ToString());
+                Console.WriteLine("Borrow ID: " + borrowIdNumber + " " + decimalFee);
+                var res_1 = db.sp_ReturnBook(borrowIdNumber, decimalFee);
+                if (owed > 0)
+                {
+                    var lateFeePayment = db.LateFeePayments.FirstOrDefault(lfp => lfp.Borrow_id == borrowIdNumber);
+                    if (lateFeePayment != null)
+                    {
+                        lateFeePayment.Paid = true;
+                        db.SaveChanges();
+                    }
+                }
+
+                using (WarningPopUp warning = (new WarningPopUp("Success", "Return Successful!", $"{selectedBook.Title} by {selectedBook.Author} was returned successfully - {DateTime.Now:D}")))
+                {
+                    if (warning.ShowDialog() == DialogResult.OK) 
+                    {
+                    }
+                    clear();
+                    pageNum = 1;
+                    LoadBorrowedBooks();
+               
+                    
+                }
+
+              
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+
+                using (WarningPopUp warning = (new WarningPopUp("System Error", "System Error", $"System error please contact support. Code: TR4868237 \n{err.Message}")))
+                {
+                    if (warning.ShowDialog() == DialogResult.OK)
+                    {
+                        //
+                    };
+                }
+            }
+
+        }
+
+        private void returnBookBtn_Click(object sender, EventArgs e)
+        {
+                returnBookPrompt();         
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pageNum = 1;
+            clear();
+            LoadBorrowedBooks();
         }
     }
 }

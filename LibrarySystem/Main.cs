@@ -75,7 +75,7 @@ namespace LibrarySystem
                 {
                     case "ADMIN":
                         mbtn_user_manage.Visible = true;
-                        mbtn_overdue.Visible = true;
+                        //mbtn_overdue.Visible = true;
                         break;
                     case "STAFF":
                         mbtn_overdue.Visible = true;

@@ -49,6 +49,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
@@ -90,6 +91,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.panel5);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(240, 0);
@@ -214,6 +216,7 @@
             this.returnBookBtn.Text = "Return";
             this.returnBookBtn.UseVisualStyleBackColor = false;
             this.returnBookBtn.Visible = false;
+            this.returnBookBtn.Click += new System.EventHandler(this.returnBookBtn_Click);
             // 
             // textBox4
             // 
@@ -288,6 +291,19 @@
             this.label2.TabIndex = 15;
             this.label2.Text = "Title";
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.SystemColors.Window;
+            this.button3.Location = new System.Drawing.Point(6, 22);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(91, 23);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "Refresh";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // MyRentals
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,5 +353,6 @@
         private System.Windows.Forms.Label feeLabel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button clearBookbtn;
+        private System.Windows.Forms.Button button3;
     }
 }

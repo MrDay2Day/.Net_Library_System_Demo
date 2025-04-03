@@ -624,7 +624,7 @@ GO
 -- Return Book 
 CREATE OR ALTER PROCEDURE sp_ReturnBook
     @borrow_id INT,
-    @daily_late_fee DECIMAL(18,2) = 1.00 -- Default late fee of $1 per day
+    @daily_late_fee DECIMAL(18,2) = 0 -- Default late fee of $1 per day
 AS
 BEGIN
     SET NOCOUNT ON;
