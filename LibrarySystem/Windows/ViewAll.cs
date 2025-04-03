@@ -101,6 +101,24 @@ namespace LibrarySystem.Windows
             dg_book_list.Columns[0].Visible = false;
             dg_book_list.Columns[4].HeaderText = "Published Year";
             dg_book_list.Columns[8].HeaderText = "Return Date";
+
+            dg_book_list.CellFormatting += Dg_book_list_CellFormatting;
+
+        }
+
+        private void Dg_book_list_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dg_book_list.Columns[e.ColumnIndex].HeaderText == "Return Date")
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
+                {
+                    if (e.Value is DateTime returnDate)
+                    {
+                        e.Value = returnDate.ToString("yyyy-MM-dd");
+                        e.FormattingApplied = true;
+                    }
+                }
+            }
         }
 
         private void LoadBooks()

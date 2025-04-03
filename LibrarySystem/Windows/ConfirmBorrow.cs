@@ -47,7 +47,22 @@ namespace LibrarySystem.Windows
         {
             try
             {
+                if (Convert.ToInt32(borrow_days.Text) > 14)
+                {
+                    using (WarningPopUp warning = (
+                       new WarningPopUp(
+                           "Borrow Days Error",
+                           "Borrow Days Excceeded",
+                           "You can only borrow for a minimum of 1 day or a maximum of 14.")))
+                        {
+                            if (warning.ShowDialog() == DialogResult.OK)
+                            {
+                                ok();
+                            }
+                        }
 
+                    return;
+                }
                 db.sp_BorrowBook(this.bookId, this.userId, Convert.ToInt32(borrow_days.Text));
 
                 using (WarningPopUp warning = (
