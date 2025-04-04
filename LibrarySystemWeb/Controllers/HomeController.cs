@@ -270,7 +270,7 @@ namespace LibrarySystemWeb.Controllers
 
                 if (user == null)
                 {
-                    model.Message = "Invalid username or password.";
+                    model.Message = "Invalid email or password.";
                     return View(model);
                 }
 
