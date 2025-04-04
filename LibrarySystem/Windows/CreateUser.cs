@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
 using System.Windows.Forms;
 using CarRental.Utils;
 
@@ -19,13 +13,14 @@ namespace LibrarySystem.Windows
         public CreateUser()
         {
             InitializeComponent();
-            db = new Library_SystemEntities();
             InitializeUserTypeComboBox();
+            db = new Library_SystemEntities();
         }
 
         public CreateUser(User user)
         {
             InitializeComponent();
+            InitializeUserTypeComboBox();
             this.systemUser = user;
             db = new Library_SystemEntities();
 
@@ -34,6 +29,30 @@ namespace LibrarySystem.Windows
             combo_userType.Visible = false;
             form_title.Text = "Edit Profile";
             userTypeLable.Visible = false;
+
+            this.autoaFill();
+        }
+
+        public CreateUser(User user, bool adminOnly)
+        {
+            InitializeComponent();
+            InitializeUserTypeComboBox();
+            this.systemUser = user;
+            db = new Library_SystemEntities();
+            
+
+            this.Text = $"{systemUser.First_name}'s Account Information";
+
+            combo_userType.Visible = true;
+            form_title.Text = "Edit Profile";
+            userTypeLable.Visible = true;
+            block.Visible = true;
+            info_password.Text = "";
+            info_password_retype.Text = "";
+            //info_password.Visible = false;
+            //info_password_retype.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
 
             this.autoaFill();
         }
@@ -54,25 +73,24 @@ namespace LibrarySystem.Windows
                 this.info_phone.Text = systemUser.Phone;
                 this.info_password.Text = null;
                 this.info_password_retype.Text = null;
+                this.block.Checked = systemUser.Blocked;
 
-                combo_userType.Visible = false;
+                Console.WriteLine($"Type is: {systemUser.Type}");
 
-                //if (combo_userType.Visible) 
-                //{
-                //    if (combo_userType.Items.Contains(systemUser.Type))
-                //    {
-                //        combo_userType.SelectedItem = systemUser.Type;
-                //    }
-                //    else if (combo_userType.Items.Count > 1) 
-                //    {
-                //        combo_userType.SelectedIndex = 1;
-                //    }
-                //}
+                if (combo_userType.Items.Contains(systemUser.Type))
+                {
+                    combo_userType.SelectedItem = systemUser.Type;
+                }
+                else if (combo_userType.Items.Count > 1)
+                {
+                    combo_userType.SelectedIndex = 1;
+                }
             }
         }
 
         private void close()
         {
+            systemUser = null;
             this.Close();
         }
 
@@ -122,36 +140,64 @@ namespace LibrarySystem.Windows
             }
         }
 
-        private void UpdateExistingUser()
+        private async void UpdateExistingUser()
         {
             try
             {
-                systemUser.First_name = info_first_name.Text;
-                systemUser.Last_name = info_last_name.Text;
-                systemUser.Email = info_email.Text;
-                systemUser.Phone = info_phone.Text;
 
-                if (!string.IsNullOrEmpty(info_password.Text))
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
                 {
-                    if (info_password.Text == info_password_retype.Text)
+                    // Retrieve the user from the current context.
+                    var userToUpdate = db.Users.Find(systemUser.User_id);
+
+                    if (userToUpdate == null)
                     {
-                        systemUser.Password = UtilityFunctions.EncryptPassword(info_password.Text);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Passwords do not match.");
+                        MessageBox.Show("User not found in the database.");
                         return;
                     }
+
+                    userToUpdate.First_name = info_first_name.Text;
+                    userToUpdate.Last_name = info_last_name.Text;
+                    userToUpdate.Email = info_email.Text;
+                    userToUpdate.Phone = info_phone.Text;
+                    userToUpdate.Blocked = block.Checked;
+                    userToUpdate.Type = combo_userType.SelectedItem.ToString();
+
+                    Console.WriteLine($"Type is: {combo_userType.SelectedItem}");
+
+                    if (!string.IsNullOrEmpty(info_password.Text))
+                    {
+                        if (info_password.Text == info_password_retype.Text)
+                        {
+                            userToUpdate.Password = UtilityFunctions.EncryptPassword(info_password.Text);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Passwords do not match.");
+                            return;
+                        }
+                    }
+
+                    db.SaveChanges();
+                    transaction.Commit();
+
+                    MessageBox.Show("User information updated successfully.");
+                    this.Close();
                 }
-
-                db.SaveChanges();
-
-                MessageBox.Show("User information updated successfully.");
-                this.Close();
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    transaction.Rollback();
+                    MessageBox.Show($"Error updating user: {ex.Message}");
+                }
             }
-            catch (Exception ex)
+            }
+            catch (Exception errr)
             {
-                MessageBox.Show($"Error updating user: {ex.Message}");
+                MessageBox.Show($"Error updating user: {errr.Message}");
             }
         }
 

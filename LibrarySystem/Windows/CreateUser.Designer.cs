@@ -45,6 +45,7 @@
             this.combo_userType = new System.Windows.Forms.ComboBox();
             this.userTypeLable = new System.Windows.Forms.Label();
             this.form_title = new System.Windows.Forms.TextBox();
+            this.block = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // cancelBtn
@@ -205,12 +206,24 @@
             this.form_title.Text = "Add New User";
             this.form_title.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // block
+            // 
+            this.block.AutoSize = true;
+            this.block.Location = new System.Drawing.Point(209, 257);
+            this.block.Name = "block";
+            this.block.Size = new System.Drawing.Size(53, 17);
+            this.block.TabIndex = 37;
+            this.block.Text = "Block";
+            this.block.UseVisualStyleBackColor = true;
+            this.block.Visible = false;
+            // 
             // CreateUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(314, 451);
+            this.Controls.Add(this.block);
             this.Controls.Add(this.form_title);
             this.Controls.Add(this.userTypeLable);
             this.Controls.Add(this.combo_userType);
@@ -261,5 +274,6 @@
         private System.Windows.Forms.ComboBox combo_userType;
         private System.Windows.Forms.Label userTypeLable;
         private System.Windows.Forms.TextBox form_title;
+        private System.Windows.Forms.CheckBox block;
     }
 }

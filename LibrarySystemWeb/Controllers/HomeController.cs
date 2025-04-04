@@ -274,6 +274,12 @@ namespace LibrarySystemWeb.Controllers
                     return View(model);
                 }
 
+                if (user.Blocked)
+                {
+                    model.Message = "Your account has been blocked please contact library staff for assistance.";
+                    return View(model);
+                }
+
                 UserInfo info = new()
                 {
                     FirstName = user.FirstName,

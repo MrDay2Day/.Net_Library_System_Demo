@@ -43,7 +43,9 @@ namespace LibrarySystem
         {
             try
             {
-                await Task.Delay(3000);
+                await Task.Delay(1000);
+
+                systemUser = null;
 
                 var email = tb_email.Text.Trim();
                 var password = tb_password.Text;
@@ -67,8 +69,17 @@ namespace LibrarySystem
                     return;
 
                 }
+
+                if (systemUser.Blocked)
+                {
+                    MessageBox.Show("Authentication Issue", "Your account has been blocked please contact library staff for assistance.");
+                    return;
+
+                }
                 login_panel.Visible = false;
                 main_menu.Visible = true;
+                
+                mbtn_user_name.Text = null;
                 mbtn_user_name.Text = $"{systemUser.First_name} {systemUser.Last_name[0]}.";
 
                 switch (systemUser.Type)
@@ -118,8 +129,8 @@ namespace LibrarySystem
         {
             UtilityFunctions.CloseAll(this);
             this.login_panel.Visible = true;
-            this.main_menu.Visible = false;
             this.systemUser = null;
+            this.main_menu.Visible = false;            
             this.mbtn_user_name.Text = "-";
             this.mbtn_user_manage.Visible = false;
             this.mbtn_overdue.Visible = false;
