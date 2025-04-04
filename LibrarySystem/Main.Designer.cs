@@ -38,24 +38,24 @@
             this.myRentalsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_overdue = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_user_manage = new System.Windows.Forms.ToolStripMenuItem();
-            this.mbtn_add_user = new System.Windows.Forms.ToolStripMenuItem();
             this.mbtn_view_all_users = new System.Windows.Forms.ToolStripMenuItem();
+            this.mbtn_add_user = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btn_login = new System.Windows.Forms.Button();
-            this.tb_password = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tb_email = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.login_panel = new System.Windows.Forms.Panel();
             this.info_panel = new System.Windows.Forms.Panel();
+            this.tb_password = new System.Windows.Forms.TextBox();
+            this.btn_login = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tb_email = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.loadingPanel = new System.Windows.Forms.PictureBox();
+            this.login_panel = new System.Windows.Forms.Panel();
             this.main_menu.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.login_panel.SuspendLayout();
             this.info_panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loadingPanel)).BeginInit();
+            this.login_panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // main_menu
@@ -83,7 +83,7 @@
             // mbtb_user_account
             // 
             this.mbtb_user_account.Name = "mbtb_user_account";
-            this.mbtb_user_account.Size = new System.Drawing.Size(180, 22);
+            this.mbtb_user_account.Size = new System.Drawing.Size(145, 22);
             this.mbtb_user_account.Text = "User Account";
             this.mbtb_user_account.Click += new System.EventHandler(this.mbtb_user_account_Click);
             // 
@@ -92,7 +92,7 @@
             this.mbtn_logout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.mbtn_logout.ForeColor = System.Drawing.Color.IndianRed;
             this.mbtn_logout.Name = "mbtn_logout";
-            this.mbtn_logout.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_logout.Size = new System.Drawing.Size(145, 22);
             this.mbtn_logout.Text = "Logout";
             this.mbtn_logout.Click += new System.EventHandler(this.mbtn_logout_Click);
             // 
@@ -109,21 +109,21 @@
             // mbtn_view_all_books
             // 
             this.mbtn_view_all_books.Name = "mbtn_view_all_books";
-            this.mbtn_view_all_books.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_view_all_books.Size = new System.Drawing.Size(132, 22);
             this.mbtn_view_all_books.Text = "View All";
             this.mbtn_view_all_books.Click += new System.EventHandler(this.mbtn_view_all_books_Click);
             // 
             // myRentalsToolStripMenuItem
             // 
             this.myRentalsToolStripMenuItem.Name = "myRentalsToolStripMenuItem";
-            this.myRentalsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.myRentalsToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.myRentalsToolStripMenuItem.Text = "My Rentals";
             this.myRentalsToolStripMenuItem.Click += new System.EventHandler(this.myRentalsToolStripMenuItem_Click);
             // 
             // mbtn_overdue
             // 
             this.mbtn_overdue.Name = "mbtn_overdue";
-            this.mbtn_overdue.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_overdue.Size = new System.Drawing.Size(132, 22);
             this.mbtn_overdue.Text = "Overdue";
             this.mbtn_overdue.Visible = false;
             this.mbtn_overdue.Click += new System.EventHandler(this.mbtn_overdue_Click);
@@ -138,19 +138,19 @@
             this.mbtn_user_manage.Text = "User Management";
             this.mbtn_user_manage.Visible = false;
             // 
-            // mbtn_add_user
-            // 
-            this.mbtn_add_user.Name = "mbtn_add_user";
-            this.mbtn_add_user.Size = new System.Drawing.Size(180, 22);
-            this.mbtn_add_user.Text = "Add User";
-            this.mbtn_add_user.Click += new System.EventHandler(this.mbtn_add_user_Click);
-            // 
             // mbtn_view_all_users
             // 
             this.mbtn_view_all_users.Name = "mbtn_view_all_users";
-            this.mbtn_view_all_users.Size = new System.Drawing.Size(180, 22);
+            this.mbtn_view_all_users.Size = new System.Drawing.Size(122, 22);
             this.mbtn_view_all_users.Text = "View All";
             this.mbtn_view_all_users.Click += new System.EventHandler(this.mbtn_view_all_users_Click);
+            // 
+            // mbtn_add_user
+            // 
+            this.mbtn_add_user.Name = "mbtn_add_user";
+            this.mbtn_add_user.Size = new System.Drawing.Size(122, 22);
+            this.mbtn_add_user.Text = "Add User";
+            this.mbtn_add_user.Click += new System.EventHandler(this.mbtn_add_user_Click);
             // 
             // panel1
             // 
@@ -165,15 +165,27 @@
             this.panel1.Size = new System.Drawing.Size(290, 350);
             this.panel1.TabIndex = 3;
             // 
-            // pictureBox1
+            // info_panel
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(42, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(206, 182);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
+            this.info_panel.Controls.Add(this.tb_password);
+            this.info_panel.Controls.Add(this.btn_login);
+            this.info_panel.Controls.Add(this.label2);
+            this.info_panel.Controls.Add(this.tb_email);
+            this.info_panel.Controls.Add(this.label3);
+            this.info_panel.Location = new System.Drawing.Point(42, 191);
+            this.info_panel.Name = "info_panel";
+            this.info_panel.Size = new System.Drawing.Size(206, 149);
+            this.info_panel.TabIndex = 7;
+            // 
+            // tb_password
+            // 
+            this.tb_password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb_password.Location = new System.Drawing.Point(19, 74);
+            this.tb_password.Name = "tb_password";
+            this.tb_password.PasswordChar = '*';
+            this.tb_password.Size = new System.Drawing.Size(167, 20);
+            this.tb_password.TabIndex = 4;
+            this.tb_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btn_login
             // 
@@ -188,25 +200,14 @@
             this.btn_login.UseVisualStyleBackColor = false;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
-            // tb_password
+            // label2
             // 
-            this.tb_password.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tb_password.Location = new System.Drawing.Point(19, 74);
-            this.tb_password.Name = "tb_password";
-            this.tb_password.PasswordChar = '*';
-            this.tb_password.Size = new System.Drawing.Size(167, 20);
-            this.tb_password.TabIndex = 4;
-            this.tb_password.Text = "password";
-            this.tb_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Password";
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Email";
             // 
             // tb_email
             // 
@@ -217,39 +218,26 @@
             this.tb_email.Name = "tb_email";
             this.tb_email.Size = new System.Drawing.Size(167, 20);
             this.tb_email.TabIndex = 2;
-            this.tb_email.Text = "admin@email.com";
             this.tb_email.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // label2
+            // label3
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Email";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Password";
             // 
-            // login_panel
+            // pictureBox1
             // 
-            this.login_panel.BackColor = System.Drawing.SystemColors.Window;
-            this.login_panel.Controls.Add(this.panel1);
-            this.login_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.login_panel.Location = new System.Drawing.Point(0, 24);
-            this.login_panel.Name = "login_panel";
-            this.login_panel.Size = new System.Drawing.Size(844, 487);
-            this.login_panel.TabIndex = 4;
-            // 
-            // info_panel
-            // 
-            this.info_panel.Controls.Add(this.tb_password);
-            this.info_panel.Controls.Add(this.btn_login);
-            this.info_panel.Controls.Add(this.label2);
-            this.info_panel.Controls.Add(this.tb_email);
-            this.info_panel.Controls.Add(this.label3);
-            this.info_panel.Location = new System.Drawing.Point(42, 191);
-            this.info_panel.Name = "info_panel";
-            this.info_panel.Size = new System.Drawing.Size(206, 149);
-            this.info_panel.TabIndex = 7;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(42, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(206, 182);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
             // 
             // loadingPanel
             // 
@@ -260,6 +248,16 @@
             this.loadingPanel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.loadingPanel.TabIndex = 8;
             this.loadingPanel.TabStop = false;
+            // 
+            // login_panel
+            // 
+            this.login_panel.BackColor = System.Drawing.SystemColors.Window;
+            this.login_panel.Controls.Add(this.panel1);
+            this.login_panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.login_panel.Location = new System.Drawing.Point(0, 24);
+            this.login_panel.Name = "login_panel";
+            this.login_panel.Size = new System.Drawing.Size(844, 487);
+            this.login_panel.TabIndex = 4;
             // 
             // Main
             // 
@@ -278,11 +276,11 @@
             this.main_menu.ResumeLayout(false);
             this.main_menu.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.login_panel.ResumeLayout(false);
             this.info_panel.ResumeLayout(false);
             this.info_panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loadingPanel)).EndInit();
+            this.login_panel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
