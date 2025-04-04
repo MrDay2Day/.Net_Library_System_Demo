@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 using CarRental.Utils;
 using LibrarySystem.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace LibrarySystem
 {
@@ -63,17 +64,24 @@ namespace LibrarySystem
 
 
                 systemUser = db.Users.FirstOrDefault(u => u.Email == email && u.Password == hash_password);
+
+                db.Entry(systemUser).Reload();
+
                 if (systemUser == null)
                 {            
                     MessageBox.Show("Invalid credentials", "Login Error");
                     return;
-
                 }
 
                 if (systemUser.Blocked)
                 {
-                    MessageBox.Show("Authentication Issue", "Your account has been blocked please contact library staff for assistance.");
-                    return;
+                    using (WarningPopUp success = (new WarningPopUp("Authentication Issue","Blocked Account", $"Your account has been blocked please contact library staff for assistance.")))
+                    {
+                        if (success.ShowDialog() == DialogResult.OK)
+                        {
+                            return;
+                        };
+                    }
 
                 }
                 login_panel.Visible = false;
@@ -89,7 +97,7 @@ namespace LibrarySystem
                         //mbtn_overdue.Visible = true;
                         break;
                     case "STAFF":
-                        mbtn_overdue.Visible = true;
+                        //mbtn_overdue.Visible = true;
                         break;
                     default:
                         break;

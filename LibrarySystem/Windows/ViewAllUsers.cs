@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LibrarySystem.Windows
@@ -68,51 +64,49 @@ namespace LibrarySystem.Windows
         {
             try
             {
+                var query = db.Users.AsQueryable();
 
- 
-            var query = db.Users.AsQueryable();
+                if (!string.IsNullOrEmpty(search_text.Text))
+                {
+                    string searchText = search_text.Text.ToLower();
+                    query = query.Where(u => u.First_name.ToLower().Contains(searchText) ||
+                                           u.Last_name.ToLower().Contains(searchText) ||
+                                           u.Email.ToLower().Contains(searchText));
+                }
 
-            if (!string.IsNullOrEmpty(search_text.Text))
-            {
-                string searchText = search_text.Text.ToLower();
-                query = query.Where(u => u.First_name.ToLower().Contains(searchText) ||
-                                       u.Last_name.ToLower().Contains(searchText) ||
-                                       u.Email.ToLower().Contains(searchText));
-            }
+                if (type_selection.SelectedItem != null && type_selection.SelectedItem.ToString() != "All")
+                {
+                    query = query.Where(u => u.Type == type_selection.SelectedItem.ToString());
+                }
 
-            if (type_selection.SelectedItem != null && type_selection.SelectedItem.ToString() != "All")
-            {
-                query = query.Where(u => u.Type == type_selection.SelectedItem.ToString());
-            }
+                var usersWithBorrowCount = query.Select(u => new UserWithBorrowCount
+                {
+                    User_id = u.User_id,
+                    First_name = u.First_name,
+                    Last_name = u.Last_name,
+                    Email = u.Email,
+                    Phone = u.Phone,
+                    Type = u.Type,
+                    Blocked = u.Blocked,
+                    BorrowCount = db.Borrows.Count(b => b.User_id == u.User_id && b.Actual_return_date == null)
+                });
 
-            var usersWithBorrowCount = query.Select(u => new UserWithBorrowCount
-            {
-                User_id = u.User_id,
-                First_name = u.First_name,
-                Last_name = u.Last_name,
-                Email = u.Email,
-                Phone = u.Phone,
-                Type = u.Type,
-                Blocked = u.Blocked,
-                BorrowCount = db.Borrows.Count(b => b.User_id == u.User_id && b.Actual_return_date == null)
-            });
+                int total = usersWithBorrowCount.Count();
+                this.totalCount = total;
+                count.Text = total.ToString();
 
-            int total = usersWithBorrowCount.Count();
-            this.totalCount = total;
-            count.Text = total.ToString();
+                int limit = ((pageNum - 1) * perPage);
 
-            int limit = ((pageNum - 1) * perPage);
+                maxPages = (int)Math.Ceiling((double)total / perPage);
 
-            maxPages = (int)Math.Ceiling((double)total / perPage);
+                count_pagination.Text = $"{(total < 1 ? 0 : limit + 1).ToString()} to " +
+                                $"{(total < 1 ? 0 : limit + perPage > totalCount ? totalCount : (limit) + perPage).ToString()} of {totalCount}";
 
-            count_pagination.Text = $"{(total < 1 ? 0 : limit + 1).ToString()} to " +
-                            $"{(total < 1 ? 0 : limit + perPage > totalCount ? totalCount : (limit) + perPage).ToString()} of {totalCount}";
 
-    
-            return usersWithBorrowCount.OrderBy(u => u.User_id) 
-                                        .Skip((pageNum - 1) * perPage)
-                                        .Take(perPage)
-                                        .ToList();
+                return usersWithBorrowCount.OrderBy(u => u.User_id)
+                                            .Skip((pageNum - 1) * perPage)
+                                            .Take(perPage)
+                                            .ToList();
 
             }
             catch (Exception)
@@ -130,7 +124,7 @@ namespace LibrarySystem.Windows
 
         private void next()
         {
-            if(pageNum < maxPages)
+            if (pageNum < maxPages)
             {
                 pageNum++;
                 LoadDataTable();
@@ -151,15 +145,16 @@ namespace LibrarySystem.Windows
             try
             {
                 Console.WriteLine("CLICKED!");
-                if (usersdgv.SelectedRows.Count > 0) 
+                if (usersdgv.SelectedRows.Count > 0)
                 {
                     var id = usersdgv.SelectedRows[0].Cells["User_id"].Value;
                     int userId = int.Parse(id.ToString());
                     Console.WriteLine($"User ID {userId}");
 
+
                     User user = db.Users.FirstOrDefault(u => u.User_id == userId);
 
-
+                    db.Entry(user).Reload();
 
                     if (user == null) throw new Exception("Inavlid User");
                     Console.WriteLine($"User type: {user.Type}");
@@ -167,13 +162,52 @@ namespace LibrarySystem.Windows
 
                     using (CreateUser userAccount = (new CreateUser(user, true)))
                     {
-                        if(userAccount.ShowDialog() != DialogResult.OK)
+                        if (userAccount.ShowDialog() != DialogResult.OK)
                         {
                             LoadDataTable();
                         }
                         else
                         {
                             throw new Exception();
+                        }
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err);
+                MessageBox.Show("Something Went Wrong", "Something went wrong fetching this user's information. Please contact support");
+            }
+        }
+
+        private void selectedUserNewContext()
+        {
+            try
+            {
+                Console.WriteLine("CLICKED!");
+                if (usersdgv.SelectedRows.Count > 0)
+                {
+                    var id = usersdgv.SelectedRows[0].Cells["User_id"].Value;
+                    int userId = int.Parse(id.ToString());
+                    Console.WriteLine($"User ID {userId}");
+
+                    using (var newDb = new Library_SystemEntities()) // Create a new context
+                    {
+                        User user = newDb.Users.FirstOrDefault(u => u.User_id == userId);
+
+                        if (user == null) throw new Exception("Inavlid User");
+                        Console.WriteLine($"User type: {user.Type}");
+
+                        using (CreateUser userAccount = (new CreateUser(user, true)))
+                        {
+                            if (userAccount.ShowDialog() != DialogResult.OK)
+                            {
+                                LoadDataTable();
+                            }
+                            else
+                            {
+                                throw new Exception();
+                            }
                         }
                     }
                 }
