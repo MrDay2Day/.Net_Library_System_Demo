@@ -32,6 +32,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.dgvRentals = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.tally = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRentals)).BeginInit();
@@ -80,11 +80,19 @@
             // 
             // dgvRentals
             // 
+            this.dgvRentals.AllowUserToAddRows = false;
+            this.dgvRentals.AllowUserToDeleteRows = false;
             this.dgvRentals.AllowUserToResizeRows = false;
+            this.dgvRentals.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRentals.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRentals.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRentals.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvRentals.Location = new System.Drawing.Point(0, 0);
+            this.dgvRentals.MultiSelect = false;
             this.dgvRentals.Name = "dgvRentals";
+            this.dgvRentals.ReadOnly = true;
+            this.dgvRentals.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvRentals.ShowEditingIcon = false;
             this.dgvRentals.Size = new System.Drawing.Size(560, 398);
             this.dgvRentals.TabIndex = 2;
             this.dgvRentals.Click += new System.EventHandler(this.dgvRentals_Click);
@@ -98,6 +106,19 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(560, 52);
             this.panel2.TabIndex = 3;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button3.ForeColor = System.Drawing.SystemColors.Window;
+            this.button3.Location = new System.Drawing.Point(6, 22);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(91, 23);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "Refresh";
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // panel5
             // 
@@ -290,19 +311,6 @@
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 15;
             this.label2.Text = "Title";
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.DarkTurquoise;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.SystemColors.Window;
-            this.button3.Location = new System.Drawing.Point(6, 22);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(91, 23);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Refresh";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // MyRentals
             // 

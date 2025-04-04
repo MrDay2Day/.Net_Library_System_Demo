@@ -226,7 +226,11 @@
             this.usersdgv.Dock = System.Windows.Forms.DockStyle.Fill;
             this.usersdgv.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.usersdgv.Location = new System.Drawing.Point(0, 0);
+            this.usersdgv.MultiSelect = false;
             this.usersdgv.Name = "usersdgv";
+            this.usersdgv.ReadOnly = true;
+            this.usersdgv.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.usersdgv.ShowEditingIcon = false;
             this.usersdgv.Size = new System.Drawing.Size(796, 364);
             this.usersdgv.TabIndex = 0;
             this.usersdgv.Click += new System.EventHandler(this.usersdgv_Click);

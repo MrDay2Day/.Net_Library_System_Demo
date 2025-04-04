@@ -130,7 +130,9 @@
             this.dg_book_list.AllowUserToResizeRows = false;
             this.dg_book_list.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dg_book_list.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dg_book_list.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dg_book_list.Location = new System.Drawing.Point(0, 0);
+            this.dg_book_list.MultiSelect = false;
             this.dg_book_list.Name = "dg_book_list";
             this.dg_book_list.ReadOnly = true;
             this.dg_book_list.ShowEditingIcon = false;
