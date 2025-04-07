@@ -188,8 +188,8 @@ namespace LibrarySystem.Windows
                             btn_new_book.Visible = true;
                         }
 
-                        btn_borrow.Enabled = true;
-                        btn_borrow.Visible = true;
+                        btn_borrow.Enabled = selectedBook.Available;
+                        btn_borrow.Visible = selectedBook.Available;
 
                         btn_clear.Enabled = true;
                         btn_clear.Visible = true;

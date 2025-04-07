@@ -63,7 +63,9 @@ namespace LibrarySystem.Windows
 
                     return;
                 }
+                Console.WriteLine($"{this.bookId}, {this.userId}, {Convert.ToInt32(borrow_days.Text)}");
                 db.sp_BorrowBook(this.bookId, this.userId, Convert.ToInt32(borrow_days.Text));
+                db.SaveChanges();
 
                 using (WarningPopUp warning = (
                     new WarningPopUp(
@@ -84,7 +86,7 @@ namespace LibrarySystem.Windows
                     new WarningPopUp(
                         "System Issue",
                         "Issue registering this borrow",
-                        "There seems to be an issue with registereing this borrow. If this problem continues please contact support.")))
+                        "There seems to be an issue with registereing this borrow. Please ensure you have no outstanding fees. If this problem continues please contact support.")))
                 {
                     warning.ShowDialog();
                 }

@@ -330,53 +330,66 @@ namespace LibrarySystem.Windows
             }
         }
 
-        private void returnBook() 
+        private void returnBook()
         {
             try
             {
-               
                 decimal decimalFee = Decimal.Parse(owed.ToString());
                 Console.WriteLine("Borrow ID: " + borrowIdNumber + " " + decimalFee);
-                var res_1 = db.sp_ReturnBook(borrowIdNumber, decimalFee);
-                if (owed > 0)
+
+                // Assuming sp_ReturnBook returns 1 for success, 0 for failure
+                var result = db.sp_ReturnBook(borrowIdNumber, decimalFee).FirstOrDefault(); //get first value.
+
+                if (result != null) // Check if the stored procedure succeeded
                 {
-                    var lateFeePayment = db.LateFeePayments.FirstOrDefault(lfp => lfp.Borrow_id == borrowIdNumber);
-                    if (lateFeePayment != null)
+                    if (owed > 0)
                     {
-                        lateFeePayment.Paid = true;
-                        db.SaveChanges();
+                        // Verify if a LateFeePayment record exists.
+                        LateFeePayment lateFeePayment = db.LateFeePayments.FirstOrDefault(lfp => lfp.Borrow_id == borrowIdNumber);
+
+                        if (lateFeePayment != null)
+                        {
+                            lateFeePayment.Paid = true;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            // Handle the case where a late fee was expected but not found.
+                            Console.WriteLine($"Warning: Late fee expected for Borrow_id {borrowIdNumber}, but no LateFeePayment record found.");
+                        }
+                    }
+
+                    using (WarningPopUp warning = new WarningPopUp("Success", "Return Successful!", $"{selectedBook.Title} by {selectedBook.Author} was returned successfully - {DateTime.Now:D}"))
+                    {
+                        if (warning.ShowDialog() == DialogResult.OK)
+                        {
+                        }
+                        clear();
+                        pageNum = 1;
+                        LoadBorrowedBooks();
                     }
                 }
-
-                using (WarningPopUp warning = (new WarningPopUp("Success", "Return Successful!", $"{selectedBook.Title} by {selectedBook.Author} was returned successfully - {DateTime.Now:D}")))
+                else
                 {
-                    if (warning.ShowDialog() == DialogResult.OK) 
+                    // Handle the case where the stored procedure failed.
+                    using (WarningPopUp warning = new WarningPopUp("Return Failed", "Return Failed", "The book return operation failed. Please try again."))
                     {
+                        warning.ShowDialog();
                     }
-                    clear();
-                    pageNum = 1;
-                    LoadBorrowedBooks();
-               
-                    
                 }
-
-              
             }
             catch (Exception err)
             {
                 Console.WriteLine(err.Message);
 
-                using (WarningPopUp warning = (new WarningPopUp("System Error", "System Error", $"System error please contact support. Code: TR4868237 \n{err.Message}")))
+                using (WarningPopUp warning = new WarningPopUp("System Error", "System Error", $"System error please contact support. Code: TR4868237 \n{err.Message}"))
                 {
                     if (warning.ShowDialog() == DialogResult.OK)
                     {
-                        //
-                    };
+                    }
                 }
             }
-
         }
-
         private void returnBookBtn_Click(object sender, EventArgs e)
         {
                 returnBookPrompt();         

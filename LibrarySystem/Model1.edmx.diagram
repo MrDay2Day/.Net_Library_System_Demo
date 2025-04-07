@@ -12,6 +12,18 @@
         <AssociationConnector Association="Library_SystemModel.FK__Borrows__Book_id__59FA5E80" ManuallyRouted="false" />
         <AssociationConnector Association="Library_SystemModel.FK__Borrows__User_id__59063A47" ManuallyRouted="false" />
         <AssociationConnector Association="Library_SystemModel.FK__LateFeePa__Borro__5FB337D6" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Library_SystemModel.C__EFMigrationsHistory" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetRoleClaim" Width="1.5" PointX="5.625" PointY="14.5" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetRole" Width="1.5" PointX="3.375" PointY="10.375" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetUserClaim" Width="1.5" PointX="7.875" PointY="6.375" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetUserLogin" Width="1.5" PointX="7.875" PointY="9.125" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetUser" Width="1.5" PointX="5.625" PointY="7.75" />
+        <EntityTypeShape EntityType="Library_SystemModel.AspNetUserToken" Width="1.5" PointX="7.875" PointY="11.75" />
+        <AssociationConnector Association="Library_SystemModel.FK_AspNetRoleClaims_AspNetRoles_RoleId" />
+        <AssociationConnector Association="Library_SystemModel.FK_AspNetUserClaims_AspNetUsers_UserId" />
+        <AssociationConnector Association="Library_SystemModel.FK_AspNetUserLogins_AspNetUsers_UserId" />
+        <AssociationConnector Association="Library_SystemModel.FK_AspNetUserTokens_AspNetUsers_UserId" />
+        <AssociationConnector Association="Library_SystemModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
